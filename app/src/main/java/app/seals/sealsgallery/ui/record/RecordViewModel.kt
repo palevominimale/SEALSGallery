@@ -1,13 +1,13 @@
-package app.seals.sealsgallery.ui.slideshow
+package app.seals.sealsgallery.ui.record
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SlideshowViewModel : ViewModel() {
+class RecordViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is slideshow Fragment"
+        value = "This is Record Fragment"
     }
     val text: LiveData<String> = _text
 }

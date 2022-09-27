@@ -86,9 +86,11 @@ class LogInDialogFragment : DialogFragment() {
                     Log.d(TAG, "signInWithCredential:success")
                     val user = auth.currentUser
                     updateUI(user)
+                    dismiss()
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     updateUI(null)
+                    dismiss()
                 }
             }
     }

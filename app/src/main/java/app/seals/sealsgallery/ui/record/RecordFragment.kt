@@ -1,4 +1,4 @@
-package app.seals.sealsgallery.ui.slideshow
+package app.seals.sealsgallery.ui.record
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,37 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import app.seals.sealsgallery.databinding.FragmentSlideshowBinding
+import app.seals.sealsgallery.databinding.FragmentRecordBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SlideshowFragment : Fragment() {
+class RecordFragment : Fragment() {
 
-    private var _binding: FragmentSlideshowBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var binding : FragmentRecordBinding
+    private val vm : RecordViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val slideshowViewModel =
-            ViewModelProvider(this).get(SlideshowViewModel::class.java)
 
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
+        binding = FragmentRecordBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textSlideshow
-        slideshowViewModel.text.observe(viewLifecycleOwner) {
+        vm.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

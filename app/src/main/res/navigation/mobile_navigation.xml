@@ -3,23 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_my_tracks">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="app.seals.sealsgallery.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:id="@+id/nav_my_tracks"
+        android:name="app.seals.sealsgallery.ui.mytracks.MyTracksFragment"
+        android:label="@string/menu_my_tracks"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="app.seals.sealsgallery.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:id="@+id/nav_feed"
+        android:name="app.seals.sealsgallery.ui.feed.FeedFragment"
+        android:label="@string/menu_feed"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="app.seals.sealsgallery.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_record"
+        android:name="app.seals.sealsgallery.ui.record.RecordFragment"
+        android:label="@string/menu_record"
+        tools:layout="@layout/fragment_record" />
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="app.seals.sealsgallery.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <action
+        android:id="@+id/nav_logout" />
+
+    <action
+        android:id="@id/nav_login" />
+
 </navigation>
