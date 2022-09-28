@@ -25,11 +25,14 @@
 
     <TextView
         android:id="@+id/UserNameTextView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/userImageView"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/userImageView"
+        app:layout_constraintBottom_toBottomOf="@id/userImageView"
+        app:layout_constraintStart_toEndOf="@id/userImageView"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/nav_header_not_logged"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
