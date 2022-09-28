@@ -16,6 +16,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.databinding.ActivityMainBinding
+import app.seals.sealsgallery.domain.bootstrap.CheckPermissions
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -27,8 +28,9 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity: AppCompatActivity() {
 
     companion object {
         private const val TAG = "MAIN_ACTIVITY"
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navView: NavigationView
     private lateinit var gso: GoogleSignInOptions
     private lateinit var googleSignInClient: GoogleSignInClient
-
+    private val checkPermissions = CheckPermissions(this, this)
     private var auth = FirebaseAuth.getInstance()
     private val appBarSet = setOf(
         R.id.nav_my_tracks,
@@ -76,6 +78,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkPermissions.invoke()
         binding = ActivityMainBinding.inflate(layoutInflater)
         navView = binding.navView
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -86,10 +89,6 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout = binding.drawerLayout
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
-
-        binding.appBarMain.fab.setOnClickListener {
-
-        }
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(appBarSet, drawerLayout)
@@ -104,6 +103,9 @@ class MainActivity : AppCompatActivity() {
         navView.menu.findItem(R.id.nav_login).setOnMenuItemClickListener {
             resultLauncher.launch(googleSignInClient.signInIntent)
             true
+        }
+        binding.appBarMain.fab.setOnClickListener {
+            navController.navigate(R.id.nav_record)
         }
     }
 
