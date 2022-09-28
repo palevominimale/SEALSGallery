@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -28,19 +29,15 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 
 class MainActivity: AppCompatActivity() {
-
-    companion object {
-        private const val TAG = "MAIN_ACTIVITY"
-    }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var navView: NavigationView
     private lateinit var gso: GoogleSignInOptions
     private lateinit var googleSignInClient: GoogleSignInClient
+
     private val checkPermissions = CheckPermissions(this, this)
     private var auth = FirebaseAuth.getInstance()
     private val appBarSet = setOf(
@@ -80,7 +77,6 @@ class MainActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         checkPermissions.invoke()
         binding = ActivityMainBinding.inflate(layoutInflater)
-        navView = binding.navView
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -93,17 +89,7 @@ class MainActivity: AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(appBarSet, drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
-        navView.setupWithNavController(navController)
-        navView.menu.findItem(R.id.nav_logout).setOnMenuItemClickListener {
-            auth.signOut()
-            signedOut()
-            true
-        }
-        navView.menu.findItem(R.id.nav_login).setOnMenuItemClickListener {
-            resultLauncher.launch(googleSignInClient.signInIntent)
-            true
-        }
+        setupNavView(navController)
         binding.appBarMain.fab.setOnClickListener {
             navController.navigate(R.id.nav_record)
         }
@@ -144,5 +130,23 @@ class MainActivity: AppCompatActivity() {
                 findViewById<TextView>(R.id.UserNameTextView).text = auth.currentUser?.displayName
             }
         }
+    }
+
+    private fun setupNavView(navController: NavController) {
+        navView = binding.navView
+        navView.setupWithNavController(navController)
+        navView.menu.findItem(R.id.nav_logout).setOnMenuItemClickListener {
+            auth.signOut()
+            signedOut()
+            true
+        }
+        navView.menu.findItem(R.id.nav_login).setOnMenuItemClickListener {
+            resultLauncher.launch(googleSignInClient.signInIntent)
+            true
+        }
+    }
+
+    companion object {
+        private const val TAG = "MAIN_ACTIVITY"
     }
 }
