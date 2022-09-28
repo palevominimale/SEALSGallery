@@ -8,5 +8,4 @@ class LocationRepositoryImpl : LocationRepository {
     override fun onLocationChanged(location: Location) {
         TODO("Not yet implemented")
     }
-
 }
