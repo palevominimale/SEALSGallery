@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.ui.mytracks.adapters.TrackListRecyclerAdapter
 import com.google.android.gms.maps.MapView
@@ -33,19 +32,11 @@ class MyTracksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val tracksListRecycler = view.rootView.findViewById<RecyclerView>(R.id.tracksListRecycler)
         val tracksListAdapter = TrackListRecyclerAdapter(vm.tracks, requireContext())
-        vm.loadTracks()
         map = view.rootView.findViewById(R.id.tracksMapView)
         map.onCreate(savedInstanceState)
         map.onResume()
         MapsInitializer.initialize(requireContext())
-        map.getMapAsync { googleMap ->
-            googleMap.apply {
-                val firstElement = vm.getFirst()
-                addPolyline(firstElement.first)
-                moveCamera(firstElement.second)
-            }
-        }
-
+        vm.loadTracks()
         tracksListAdapter.selectedItem.observe(viewLifecycleOwner) { track ->
             map.getMapAsync { googleMap ->
                 googleMap.apply {

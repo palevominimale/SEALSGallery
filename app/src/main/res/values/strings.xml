@@ -28,6 +28,6 @@
     <string name="float_button_label">Start record</string>
     <string name="map_description">Map</string>
     <string name="tracks_city">City</string>
-    <string name="track_item_time">12:00:00 - 13:30:30</string>
+    <string name="track_item_time">12:00:00 – 13:30:30</string>
     <string name="id">id: 0</string>
 </resources>
