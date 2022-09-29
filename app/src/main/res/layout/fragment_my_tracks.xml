@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/tracksMapView"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:contentDescription="@string/map_description"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tracksMapView"
+        app:layout_constraintVertical_bias="0.0"
+        android:isScrollContainer="true"
+        app:swipeRefreshLayoutProgressSpinnerBackgroundColor="@color/teal_200">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tracksListRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/tracksMapView"
+            tools:itemCount="10"
+            tools:listitem="@layout/track_item"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="@drawable/recycler_bg"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop= "0dp"
+    >
+
+    <ImageView
+        android:id="@+id/trackIcon"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/insights_40px"
+        android:contentDescription="@string/menu_my_tracks"/>
+
+    <TextView
+        android:id="@+id/trackItemCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
+        android:text="@string/tracks_city"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/trackItemTime"
+        android:text="@string/track_item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/trackItemCity"
+        app:layout_constraintStart_toStartOf="@id/trackItemCity"
+        />
+
+    <TextView
+        android:id="@+id/trackId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/id"
+        app:layout_constraintTop_toBottomOf="@id/trackItemTime"
+        app:layout_constraintStart_toStartOf="@id/trackItemTime"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
