@@ -1,6 +1,7 @@
 package app.seals.sealsgallery.ui.main
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -18,6 +19,7 @@ import androidx.navigation.ui.setupWithNavController
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.databinding.ActivityMainBinding
 import app.seals.sealsgallery.domain.bootstrap.CheckPermissions
+import app.seals.sealsgallery.location.LocationService
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -92,6 +94,10 @@ class MainActivity: AppCompatActivity() {
         setupNavView(navController)
         binding.appBarMain.fab.setOnClickListener {
             navController.navigate(R.id.nav_record)
+            if(checkPermissions.invoke()) {
+                val intent = Intent(this, LocationService::class.java)
+                startForegroundService(intent)
+            }
         }
     }
 
