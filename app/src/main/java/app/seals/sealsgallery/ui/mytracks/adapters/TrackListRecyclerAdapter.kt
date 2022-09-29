@@ -42,7 +42,7 @@ class TrackListRecyclerAdapter (
         val material = tracks.value?.get(position) ?: TrackDomainModel()
         material.run{
             try {
-                holder.city.text = "${this.startTime}: ${
+                holder.city.text = "${
                     Geocoder(context).getFromLocation(
                     this.trackPoints[0].latitude,
                     this.trackPoints[0].longitude,
@@ -59,7 +59,7 @@ class TrackListRecyclerAdapter (
 
             val t = Instant.ofEpochSecond(this.startTime/1000)
                 .atZone(ZoneId.systemDefault())
-
+            holder.id.text = "${this.startTime}"
             holder.time.text = "${t.dayOfMonth}.${t.monthValue}.${t.year} ${t.hour}:${t.minute}"
             holder.itemView.setOnClickListener {
                 selectedItem.postValue(material)

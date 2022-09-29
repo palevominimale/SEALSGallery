@@ -37,6 +37,7 @@ class MainActivity: AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var navView: NavigationView
+    private lateinit var navController: NavController
     private lateinit var gso: GoogleSignInOptions
     private lateinit var googleSignInClient: GoogleSignInClient
 
@@ -87,17 +88,20 @@ class MainActivity: AppCompatActivity() {
         val drawerLayout = binding.drawerLayout
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
-
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(appBarSet, drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         setupNavView(navController)
+
+        if (auth.currentUser != null) {
+            navController.navigate(R.id.nav_my_tracks)
+        }
+
         binding.appBarMain.fab.setOnClickListener {
             navController.navigate(R.id.nav_record)
             if(checkPermissions.invoke()) {
                 val intent = Intent(this, LocationService::class.java)
                 startForegroundService(intent)
-
             }
         }
     }
@@ -125,6 +129,7 @@ class MainActivity: AppCompatActivity() {
     private fun signedIn() {
         navView.menu.setGroupVisible(R.id.nav_group_logged_in, true)
         navView.menu.setGroupVisible(R.id.nav_group_logged_out, false)
+        navController.navigate(R.id.nav_my_tracks)
         var drawable : RoundedBitmapDrawable? = null
         CoroutineScope(Dispatchers.IO).launch {
             val bitmap = kotlin.runCatching { Picasso.get().load(auth.currentUser?.photoUrl).get() }
@@ -145,6 +150,7 @@ class MainActivity: AppCompatActivity() {
         navView.menu.findItem(R.id.nav_logout).setOnMenuItemClickListener {
             auth.signOut()
             signedOut()
+            navController.navigate(R.id.nav_logout)
             true
         }
         navView.menu.findItem(R.id.nav_login).setOnMenuItemClickListener {

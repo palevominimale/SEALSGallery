@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.ui.mytracks.adapters.TrackListRecyclerAdapter
-import com.google.firebase.auth.FirebaseAuth
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.MapsInitializer
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyTracksFragment : Fragment() {
 
     private val vm : MyTracksViewModel by viewModel()
-    private var auth = FirebaseAuth.getInstance()
+    private lateinit var map : MapView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,10 +33,30 @@ class MyTracksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val tracksListRecycler = view.rootView.findViewById<RecyclerView>(R.id.tracksListRecycler)
         val tracksListAdapter = TrackListRecyclerAdapter(vm.tracks, requireContext())
+        vm.loadTracks()
+        map = view.rootView.findViewById(R.id.tracksMapView)
+        map.onCreate(savedInstanceState)
+        map.onResume()
+        MapsInitializer.initialize(requireContext())
+        map.getMapAsync { googleMap ->
+            googleMap.apply {
+                val firstElement = vm.getFirst()
+                addPolyline(firstElement.first)
+                moveCamera(firstElement.second)
+            }
+        }
 
+        tracksListAdapter.selectedItem.observe(viewLifecycleOwner) { track ->
+            map.getMapAsync { googleMap ->
+                googleMap.apply {
+                    clear()
+                    addPolyline(vm.drawTrack(track))
+                    moveCamera(vm.updateCameraBounds(track))
+                }
+            }
+        }
         tracksListRecycler.layoutManager = LinearLayoutManager(requireContext())
         tracksListRecycler.adapter = tracksListAdapter
-        vm.loadTracks()
         tracksListAdapter.notifyDataSetChanged()
 
         vm.tracks.observe(viewLifecycleOwner) {

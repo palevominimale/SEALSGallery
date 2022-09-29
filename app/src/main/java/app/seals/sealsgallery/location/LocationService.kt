@@ -56,6 +56,7 @@ class LocationService : Service() {
         }
         ref.child(track.startTime.toString())
         ref.setValue(track)
+        track.trackPoints.clear()
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
