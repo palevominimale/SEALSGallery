@@ -97,6 +97,7 @@ class MainActivity: AppCompatActivity() {
             if(checkPermissions.invoke()) {
                 val intent = Intent(this, LocationService::class.java)
                 startForegroundService(intent)
+
             }
         }
     }

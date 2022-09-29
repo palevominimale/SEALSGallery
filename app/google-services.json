@@ -1,10 +1,48 @@
 {
   "project_info": {
     "project_number": "692429642162",
+    "firebase_url": "https://geogallery-362509-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "geogallery-362509",
     "storage_bucket": "geogallery-362509.appspot.com"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692429642162:android:a7e4d8c7adc91c5b3c6cab",
+        "android_client_info": {
+          "package_name": "app.seals.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "692429642162-rrs9nd2h26f0g5e8ar1htq90fnvn68n7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.seals.chat",
+            "certificate_hash": "82d0fa2ebe89a514f5c14c59cb058a7a20c6a2ad"
+          }
+        },
+        {
+          "client_id": "692429642162-sf4fph0rgphcuka4c0rcpn1i68sp1vut.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRggc5WwcMS1jpJPeBrZq3T6Gyf61MZvQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "692429642162-sf4fph0rgphcuka4c0rcpn1i68sp1vut.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:692429642162:android:29855dc604b68c983c6cab",
