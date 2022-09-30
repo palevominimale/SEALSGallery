@@ -6,7 +6,6 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
@@ -30,4 +29,6 @@
     <string name="tracks_city">City</string>
     <string name="track_item_time">12:00:00 – 13:30:30</string>
     <string name="id">id: 0</string>
+    <string name="start_intent">app.seals.sealsgallery.START</string>
+    <string name="stop_intent">app.seals.sealsgallery.STOP</string>
 </resources>

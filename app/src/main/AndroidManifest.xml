@@ -33,6 +33,8 @@
             android:theme="@style/Theme.SEALSGallery.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="app.seals.sealsgallery.START" />
+                <action android:name="app.seals.sealsgallery.STOP" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

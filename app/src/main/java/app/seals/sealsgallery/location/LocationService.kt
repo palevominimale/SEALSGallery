@@ -3,6 +3,7 @@ package app.seals.sealsgallery.location
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -14,6 +15,7 @@ import com.google.android.gms.location.*
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.domain.models.TrackDomainModel
 import app.seals.sealsgallery.domain.models.TrackPointDomainModel
+import app.seals.sealsgallery.ui.record.RecordFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.time.Instant
@@ -75,12 +77,18 @@ class LocationService : Service() {
         }
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if(intent?.action == "stop") {
             flc.removeLocationUpdates(locationCallback)
             stopForeground(true)
             stopSelf()
         } else {
+            val i = Intent()
+            i.action = getString(R.string.start_intent)
+            val pi = PendingIntent.getBroadcast(applicationContext, 0, i, PendingIntent.FLAG_UPDATE_CURRENT)
+            pi.send()
+            Log.e(TAG, "$pi")
             requestLocation()
         }
         return super.onStartCommand(intent, flags, startId)

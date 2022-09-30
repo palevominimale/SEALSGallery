@@ -14,8 +14,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 
 class RecordViewModel : ViewModel() {
 
@@ -26,8 +24,7 @@ class RecordViewModel : ViewModel() {
         private val db = FirebaseDatabase.getInstance()
         private val auth = FirebaseAuth.getInstance()
         private val ref = db.getReference("tracks").child(auth.currentUser?.uid.toString())
-        private val scope = CoroutineScope(Dispatchers.IO)
-        private const val TAG = "RECORD_FRAGMENT"
+        private const val TAG = "RECORD_FRAGMENT_VM"
     }
 
     private val listener: ValueEventListener = object : ValueEventListener {
