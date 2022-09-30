@@ -3,6 +3,7 @@ package app.seals.sealsgallery.ui.main
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.provider.SyncStateContract
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -41,6 +42,7 @@ class MainActivity: AppCompatActivity() {
     private lateinit var gso: GoogleSignInOptions
     private lateinit var googleSignInClient: GoogleSignInClient
 
+    private var recordIsActive = false
     private val checkPermissions = CheckPermissions(this, this)
     private var auth = FirebaseAuth.getInstance()
     private val appBarSet = setOf(
@@ -51,6 +53,7 @@ class MainActivity: AppCompatActivity() {
         R.id.nav_logout,
         R.id.nav_login,
     )
+
     private var resultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -63,8 +66,6 @@ class MainActivity: AppCompatActivity() {
                 auth.signInWithCredential(credential)
                     .addOnCompleteListener(this) { signInTask ->
                         if (signInTask.isSuccessful) {
-                            Log.d(TAG, "signInWithCredential:success")
-                            auth.currentUser
                             signedIn()
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", signInTask.exception)
@@ -80,11 +81,13 @@ class MainActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         checkPermissions.invoke()
         binding = ActivityMainBinding.inflate(layoutInflater)
+
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+
         val drawerLayout = binding.drawerLayout
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
@@ -92,27 +95,36 @@ class MainActivity: AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(appBarSet, drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         setupNavView(navController)
-
+        setupFab()
         if (auth.currentUser != null) {
-            navController.navigate(R.id.nav_my_tracks)
+            signedIn()
         }
 
-        binding.appBarMain.fab.setOnClickListener {
-            navController.navigate(R.id.nav_record)
-            if(checkPermissions.invoke()) {
-                val intent = Intent(this, LocationService::class.java)
-                startForegroundService(intent)
+    }
+
+    private fun setupFab() {
+        if(checkPermissions.invoke()) {
+            binding.appBarMain.fab.setOnClickListener {
+                navController.navigate(R.id.nav_record)
+                if(recordIsActive) {
+                    val intent = Intent(this, LocationService::class.java)
+                    intent.action = "stop"
+                    startService(intent)
+                    recordIsActive = false
+                    binding.appBarMain.fab.setImageResource(R.drawable.radio_button_checked_40px)
+                } else {
+                    val intent = Intent(this, LocationService::class.java)
+                    intent.action = "start"
+                    startForegroundService(intent)
+                    recordIsActive = true
+                    binding.appBarMain.fab.setImageResource(R.drawable.stop_circle_48px)
+                }
             }
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        if(auth.currentUser != null) {
-            signedIn()
-        } else {
-            signedOut()
-        }
         findViewById<TextView>(R.id.UserNameTextView).text = auth.currentUser?.displayName ?: getString(
             R.string.nav_header_not_logged
         )

@@ -45,7 +45,7 @@ class LocationService : Service() {
         setupNotifications()
         flc = LocationServices.getFusedLocationProviderClient(this)
         flc.lastLocation.addOnCompleteListener { location ->
-            track.startTime = location.result.time
+            track.startTime = Instant.now().toEpochMilli()
             track.trackPoints.add(TrackPointDomainModel(
                 id = id,
                 time = location.result.time,
@@ -56,27 +56,33 @@ class LocationService : Service() {
         }
         ref.child(track.startTime.toString())
         ref.setValue(track)
-        track.trackPoints.clear()
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                Log.e(TAG, "${locationResult.lastLocation}")
-                track.trackPoints.add(TrackPointDomainModel(
+                val point = TrackPointDomainModel(
                     id = locationResult.lastLocation?.time ?: 0L,
                     time = locationResult.lastLocation?.time ?: 0L,
                     latitude = locationResult.lastLocation?.latitude ?: 0.0,
                     longitude = locationResult.lastLocation?.longitude ?: 0.0,
                     altitude = locationResult.lastLocation?.altitude ?: 0.0,
-                ))
-                track.endTime = locationResult.lastLocation?.time ?: 0L
-                ref.setValue(track)
+                )
+                ref.child("trackPoints").child(id.toString()).setValue(point)
+                id++
+                ref.child("endTime").setValue(point.time)
+                Log.e(TAG, "${locationResult.lastLocation}")
                 super.onLocationResult(locationResult)
             }
         }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        requestLocation()
+        if(intent?.action == "stop") {
+            flc.removeLocationUpdates(locationCallback)
+            stopForeground(true)
+            stopSelf()
+        } else {
+            requestLocation()
+        }
         return super.onStartCommand(intent, flags, startId)
     }
 
