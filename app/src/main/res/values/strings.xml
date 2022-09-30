@@ -31,4 +31,8 @@
     <string name="id">id: 0</string>
     <string name="start_intent">app.seals.sealsgallery.START</string>
     <string name="stop_intent">app.seals.sealsgallery.STOP</string>
+    <string name="service_is_active">SEALS Gallery is active</string>
+    <string name="tracker_is_active">GPS Tracker is active!</string>
+    <string name="notifications_channel">Channel_01</string>
+    <string name="notifications_channel_title">Notification channel</string>
 </resources>

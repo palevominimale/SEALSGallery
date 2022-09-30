@@ -1,8 +1,6 @@
 package app.seals.sealsgallery.di
 
-import app.seals.sealsgallery.domain.bootstrap.CheckPermissions
 import app.seals.sealsgallery.ui.feed.FeedViewModel
-import app.seals.sealsgallery.ui.main.MainActivity
 import app.seals.sealsgallery.ui.main.MainActivityViewModel
 import app.seals.sealsgallery.ui.mytracks.MyTracksViewModel
 import app.seals.sealsgallery.ui.record.RecordViewModel

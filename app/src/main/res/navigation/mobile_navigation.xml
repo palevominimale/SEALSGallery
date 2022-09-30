@@ -37,4 +37,10 @@
     <action
         android:id="@id/nav_login" />
 
+    <action android:id="@+id/nav_to_record"
+        app:popUpToInclusive="false"
+        app:popUpToSaveState="true"
+        app:popUpTo="@id/nav_my_tracks"
+        app:destination="@id/nav_record" />
+
 </navigation>

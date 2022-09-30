@@ -9,13 +9,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.os.Looper
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.android.gms.location.*
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.domain.models.TrackDomainModel
 import app.seals.sealsgallery.domain.models.TrackPointDomainModel
-import app.seals.sealsgallery.ui.record.RecordFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.time.Instant
@@ -26,7 +24,6 @@ class LocationService : Service() {
     companion object {
         private const val INTERVAL = 5000L
         private const val MIN_INTERVAL = 3000L
-        private const val TAG = "LOCATION_SERVICE"
         private var id = 0L
         private val db = FirebaseDatabase.getInstance()
         private val auth = FirebaseAuth.getInstance()
@@ -71,24 +68,21 @@ class LocationService : Service() {
                 ref.child("trackPoints").child(id.toString()).setValue(point)
                 id++
                 ref.child("endTime").setValue(point.time)
-                Log.e(TAG, "${locationResult.lastLocation}")
                 super.onLocationResult(locationResult)
             }
         }
     }
 
-    @SuppressLint("UnspecifiedImmutableFlag")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if(intent?.action == "stop") {
+        if(intent?.action == getString(R.string.stop_intent)) {
             flc.removeLocationUpdates(locationCallback)
             stopForeground(true)
             stopSelf()
         } else {
             val i = Intent()
             i.action = getString(R.string.start_intent)
-            val pi = PendingIntent.getBroadcast(applicationContext, 0, i, PendingIntent.FLAG_UPDATE_CURRENT)
+            val pi = PendingIntent.getBroadcast(applicationContext, 0, i, PendingIntent.FLAG_IMMUTABLE)
             pi.send()
-            Log.e(TAG, "$pi")
             requestLocation()
         }
         return super.onStartCommand(intent, flags, startId)
@@ -104,18 +98,18 @@ class LocationService : Service() {
     }
 
     private fun setupNotifications() {
-        val channelId = "my_channel_01"
+        val channelId = getString(R.string.notifications_channel)
         val channel = NotificationChannel(channelId,
-            "Channel title",
+            getString(R.string.notifications_channel_title),
             NotificationManager.IMPORTANCE_HIGH)
 
         val ns = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         ns.createNotificationChannel(channel)
 
         val notification = NotificationCompat.Builder(this, channelId).apply {
-            setContentTitle("SEALS Gallery")
-            setContentTitle("SEALS Gallery is active")
-            setContentText("Tracking is active now!")
+            setContentTitle(getString(R.string.app_name))
+            setContentTitle(getString(R.string.service_is_active))
+            setContentText(getString(R.string.tracker_is_active))
             setSmallIcon(R.drawable.radio_button_checked_40px)
         }.build()
 

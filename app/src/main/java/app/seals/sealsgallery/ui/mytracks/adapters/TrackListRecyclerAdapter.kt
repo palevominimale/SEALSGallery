@@ -26,7 +26,6 @@ class TrackListRecyclerAdapter (
         val city: TextView = item.findViewById(R.id.trackItemCity)
         val time: TextView = item.findViewById(R.id.trackItemTime)
         val id: TextView = item.findViewById(R.id.trackId)
-        val icon: ImageView = item.findViewById(R.id.trackIcon)
     }
 
     override fun getItemCount(): Int = tracks.value?.size ?: 0

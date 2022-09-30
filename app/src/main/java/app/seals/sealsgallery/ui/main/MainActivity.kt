@@ -3,7 +3,6 @@ package app.seals.sealsgallery.ui.main
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.provider.SyncStateContract
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -105,16 +104,18 @@ class MainActivity: AppCompatActivity() {
     private fun setupFab() {
         if(checkPermissions.invoke()) {
             binding.appBarMain.fab.setOnClickListener {
-                navController.navigate(R.id.nav_record)
+                if(navController.currentDestination?.id != R.id.nav_record) {
+                    navController.navigate(R.id.nav_to_record)
+                }
                 if(recordIsActive) {
                     val intent = Intent(this, LocationService::class.java)
-                    intent.action = "stop"
+                    intent.action = getString(R.string.stop_intent)
                     startService(intent)
                     recordIsActive = false
                     binding.appBarMain.fab.setImageResource(R.drawable.radio_button_checked_40px)
                 } else {
                     val intent = Intent(this, LocationService::class.java)
-                    intent.action = "start"
+                    intent.action = getString(R.string.start_intent)
                     startForegroundService(intent)
                     recordIsActive = true
                     binding.appBarMain.fab.setImageResource(R.drawable.stop_circle_48px)

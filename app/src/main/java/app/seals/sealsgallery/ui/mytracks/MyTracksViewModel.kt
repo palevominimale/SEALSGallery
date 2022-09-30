@@ -1,6 +1,5 @@
 package app.seals.sealsgallery.ui.mytracks
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.seals.sealsgallery.domain.models.TrackDomainModel
@@ -10,7 +9,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 
 class MyTracksViewModel : ViewModel() {
@@ -33,10 +31,6 @@ class MyTracksViewModel : ViewModel() {
                 tracks.postValue(tracksList)
             }
         }
-    }
-
-    fun getFirst() : Pair<PolylineOptions, CameraUpdate> {
-        return Pair(drawTrack(tracksList[0]), updateCameraBounds(tracksList[0]))
     }
 
     fun drawTrack(track: TrackDomainModel) : PolylineOptions {
