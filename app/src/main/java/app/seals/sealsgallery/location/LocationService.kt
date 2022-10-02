@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.os.Looper
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.android.gms.location.*
 import app.seals.sealsgallery.R
@@ -52,9 +53,9 @@ class LocationService : Service() {
                 longitude = location.result.longitude,
                 altitude = location.result.altitude
             ))
+            ref.child(track.startTime.toString())
+            ref.setValue(track)
         }
-        ref.child(track.startTime.toString())
-        ref.setValue(track)
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
@@ -66,8 +67,14 @@ class LocationService : Service() {
                     altitude = locationResult.lastLocation?.altitude ?: 0.0,
                 )
                 ref.child("trackPoints").child(id.toString()).setValue(point)
-                id++
                 ref.child("endTime").setValue(point.time)
+
+                val i = Intent()
+                i.action = getString(R.string.track_content_intent)
+                i.putExtra("track", track)
+                val pi = PendingIntent.getBroadcast(applicationContext, 0, i, PendingIntent.FLAG_IMMUTABLE)
+                pi.send()
+                id++
                 super.onLocationResult(locationResult)
             }
         }
@@ -79,11 +86,12 @@ class LocationService : Service() {
             stopForeground(true)
             stopSelf()
         } else {
+            requestLocation()
             val i = Intent()
             i.action = getString(R.string.start_intent)
             val pi = PendingIntent.getBroadcast(applicationContext, 0, i, PendingIntent.FLAG_IMMUTABLE)
             pi.send()
-            requestLocation()
+            Log.e("RECORD_SERVICE", "$intent")
         }
         return super.onStartCommand(intent, flags, startId)
     }
