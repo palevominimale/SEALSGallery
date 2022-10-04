@@ -1,12 +1,10 @@
 package app.seals.sealsgallery.domain.map_tools
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import app.seals.sealsgallery.R
 import app.seals.sealsgallery.domain.models.TrackDomainModel
-import com.google.android.gms.dynamic.IObjectWrapper
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.JointType
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.RoundCap
 
 class DrawTrack {
 
