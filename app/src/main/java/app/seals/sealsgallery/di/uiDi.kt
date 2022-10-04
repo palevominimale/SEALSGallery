@@ -16,7 +16,9 @@ val uiDi = module {
 
     viewModel {
         RecordViewModel(
-            context = androidContext()
+            context = androidContext(),
+            drawTrack = get(),
+            updateBounds = get()
         )
     }
 
@@ -26,7 +28,9 @@ val uiDi = module {
 
     viewModel {
         MyTracksViewModel(
-            context = androidContext()
+            context = androidContext(),
+            drawTrack = get(),
+            updateBounds = get()
         )
     }
 

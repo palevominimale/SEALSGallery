@@ -8,8 +8,6 @@ import androidx.fragment.app.Fragment
 import app.seals.sealsgallery.R
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RecordFragment : Fragment() {
@@ -36,18 +34,8 @@ class RecordFragment : Fragment() {
             map.getMapAsync { googleMap ->
                 googleMap.apply {
                     val options = vm.drawTrack()
-                    val markerStart = MarkerOptions().apply {
-                        position(options.points[0])
-                        title("Start")
-                    }
-                    val markerEnd = MarkerOptions().apply {
-                        position(options.points.last())
-                        title("End")
-                    }
                     clear()
                     addPolyline(options)
-                    addMarker(markerStart)
-                    addMarker(markerEnd)
                     moveCamera(vm.updateCameraBounds())
                 }
             }

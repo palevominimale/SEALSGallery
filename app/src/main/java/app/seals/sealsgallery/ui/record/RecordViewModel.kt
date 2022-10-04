@@ -5,22 +5,22 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.seals.sealsgallery.R
+import app.seals.sealsgallery.domain.map_tools.DrawTrack
+import app.seals.sealsgallery.domain.map_tools.UpdateBounds
 import app.seals.sealsgallery.domain.models.TrackDomainModel
+import app.seals.sealsgallery.domain.models.TrackPointDomainModel
 import com.google.android.gms.maps.CameraUpdate
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.Cap
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 
 @SuppressLint("StaticFieldLeak")
 class RecordViewModel (
-    private val context: Context
+    private val context: Context,
+    private val drawTrack: DrawTrack,
+    private val updateBounds: UpdateBounds
 ) : ViewModel() {
 
     val currentRecord = MutableLiveData<TrackDomainModel>()
@@ -53,24 +53,11 @@ class RecordViewModel (
     }
 
     fun drawTrack() : PolylineOptions {
-        return PolylineOptions().apply {
-            currentRecord.value?.trackPoints?.forEach {
-                add(LatLng(it.latitude, it.longitude))
-            }
-            color(currentRecord.value?.color ?: Color.RED)
-            width(15F)
-            geodesic(true)
-        }
+        return drawTrack.invoke(currentRecord.value ?: TrackDomainModel())
     }
 
     fun updateCameraBounds() : CameraUpdate {
-        val cameraPosition = CameraPosition(LatLng(currentRecord.value?.trackPoints?.last()?.latitude ?: 0.0
-            ,currentRecord.value?.trackPoints?.last()?.longitude ?: 0.0),
-        17f,
-        0f,
-        0f)
-        val cam = CameraUpdateFactory.newCameraPosition(cameraPosition)
-        camera = cam
+        camera = updateBounds.invoke(currentRecord.value?.trackPoints?.last() ?: TrackPointDomainModel())
         return camera
     }
 }
