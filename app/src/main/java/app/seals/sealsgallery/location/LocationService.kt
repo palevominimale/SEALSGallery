@@ -17,20 +17,30 @@ import app.seals.sealsgallery.domain.models.TrackDomainModel
 import app.seals.sealsgallery.domain.models.TrackPointDomainModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import org.koin.android.ext.android.inject
 import java.time.Instant
 
 @SuppressLint("MissingPermission")
 class LocationService : Service() {
 
+    private val context by inject<Context>()
+
+    private val refName = context.getString(R.string.firebase_reference_name)
+    private val refTrackPoints = context.getString(R.string.firebase_reference_points_node_name)
+    private val refEndTime = context.getString(R.string.firebase_reference_end_time_name)
+    private val intentExtraName = context.getString(R.string.track_intent_name)
+
+    private val db = FirebaseDatabase.getInstance()
+    private val auth = FirebaseAuth.getInstance()
+    private val now = Instant.now().epochSecond
+    private val ref = db.getReference(refName).child(auth.currentUser?.uid.toString()).child(now.toString())
+    private val track = TrackDomainModel()
+    private var id = 0
+
     companion object {
         private const val INTERVAL = 5000L
         private const val MIN_INTERVAL = 3000L
-        private var id = 0L
-        private val db = FirebaseDatabase.getInstance()
-        private val auth = FirebaseAuth.getInstance()
-        private val now = Instant.now().epochSecond
-        private val ref = db.getReference("tracks").child(auth.currentUser?.uid.toString()).child(now.toString())
-        private val track = TrackDomainModel()
+        private const val TAG = "RECORD_SERVICE"
     }
 
     private lateinit var flc: FusedLocationProviderClient
@@ -40,41 +50,29 @@ class LocationService : Service() {
         return null
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     override fun onCreate() {
         super.onCreate()
         setupNotifications()
         flc = LocationServices.getFusedLocationProviderClient(this)
-        flc.lastLocation.addOnCompleteListener { location ->
-            track.startTime = Instant.now().toEpochMilli()
-            track.trackPoints.add(TrackPointDomainModel(
-                id = id,
-                time = location.result.time,
-                latitude = location.result.latitude,
-                longitude = location.result.longitude,
-                altitude = location.result.altitude
-            ))
-            ref.child(track.startTime.toString())
-            ref.setValue(track)
-        }
-
+        track.trackPoints.clear()
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 val point = TrackPointDomainModel(
                     id = locationResult.lastLocation?.time ?: 0L,
-                    time = locationResult.lastLocation?.time ?: 0L,
                     latitude = locationResult.lastLocation?.latitude ?: 0.0,
                     longitude = locationResult.lastLocation?.longitude ?: 0.0,
                     altitude = locationResult.lastLocation?.altitude ?: 0.0,
                 )
-                ref.child("trackPoints").child(id.toString()).setValue(point)
-                ref.child("endTime").setValue(point.time)
-
-                val i = Intent()
-                i.action = getString(R.string.track_content_intent)
-                i.putExtra("track", track)
-                val pi = PendingIntent.getBroadcast(applicationContext, 0, i, PendingIntent.FLAG_IMMUTABLE)
-                pi.send()
+                ref.child(refTrackPoints).child(id.toString()).setValue(point)
+                ref.child(refEndTime).setValue(point.id)
                 id++
+                track.trackPoints.add(point)
+                val intent = Intent()
+                intent.action = getString(R.string.track_content_intent)
+                intent.putExtra(intentExtraName, track)
+                val pi = PendingIntent.getBroadcast(applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                pi.send()
                 super.onLocationResult(locationResult)
             }
         }
@@ -91,12 +89,15 @@ class LocationService : Service() {
             i.action = getString(R.string.start_intent)
             val pi = PendingIntent.getBroadcast(applicationContext, 0, i, PendingIntent.FLAG_IMMUTABLE)
             pi.send()
-            Log.e("RECORD_SERVICE", "$intent")
+            Log.e(TAG, "$intent")
         }
         return super.onStartCommand(intent, flags, startId)
     }
 
     private fun requestLocation() {
+        track.startTime = Instant.now().toEpochMilli()
+        ref.child(track.startTime.toString())
+        ref.setValue(track)
         val locationRequest = LocationRequest.create().apply {
             interval = INTERVAL
             fastestInterval = MIN_INTERVAL

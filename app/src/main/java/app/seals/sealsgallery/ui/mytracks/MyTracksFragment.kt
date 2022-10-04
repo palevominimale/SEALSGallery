@@ -12,6 +12,7 @@ import app.seals.sealsgallery.R
 import app.seals.sealsgallery.ui.mytracks.adapters.TrackListRecyclerAdapter
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.model.MarkerOptions
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyTracksFragment : Fragment() {
@@ -40,8 +41,19 @@ class MyTracksFragment : Fragment() {
         tracksListAdapter.selectedItem.observe(viewLifecycleOwner) { track ->
             map.getMapAsync { googleMap ->
                 googleMap.apply {
+                    val options = vm.drawTrack(track)
+                    val markerStart = MarkerOptions().apply {
+                        position(options.points[0])
+                        title("Start")
+                    }
+                    val markerEnd = MarkerOptions().apply {
+                        position(options.points.last())
+                        title("End")
+                    }
                     clear()
-                    addPolyline(vm.drawTrack(track))
+                    addPolyline(options)
+                    addMarker(markerStart)
+                    addMarker(markerEnd)
                     moveCamera(vm.updateCameraBounds(track))
                 }
             }

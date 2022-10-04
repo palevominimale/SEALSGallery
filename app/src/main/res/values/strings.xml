@@ -36,4 +36,8 @@
     <string name="tracker_is_active">GPS Tracker is active!</string>
     <string name="notifications_channel">Channel_01</string>
     <string name="notifications_channel_title">Notification channel</string>
+    <string name="track_intent_name">track</string>
+    <string name="firebase_reference_name">tracks</string>
+    <string name="firebase_reference_points_node_name">trackPoints</string>
+    <string name="firebase_reference_end_time_name">endTime</string>
 </resources>

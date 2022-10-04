@@ -3,6 +3,7 @@ package app.seals.sealsgallery.app
 import android.app.Application
 import app.seals.sealsgallery.di.domainDi
 import app.seals.sealsgallery.di.firebaseDi
+import app.seals.sealsgallery.di.locationDi
 import app.seals.sealsgallery.di.uiDi
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -19,7 +20,8 @@ class App: Application() {
             modules(listOf(
                 uiDi,
                 domainDi,
-                firebaseDi
+                firebaseDi,
+                locationDi
             ))
         }
     }

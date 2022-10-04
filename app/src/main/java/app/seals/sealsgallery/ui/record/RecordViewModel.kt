@@ -14,6 +14,7 @@ import app.seals.sealsgallery.domain.models.TrackDomainModel
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.Cap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 
@@ -28,6 +29,7 @@ class RecordViewModel (
     private val startIntent = context.getString(R.string.start_intent)
     private val stopIntent = context.getString(R.string.stop_intent)
     private val contentIntent = context.getString(R.string.track_content_intent)
+    private val intentExtraName = context.getString(R.string.track_intent_name)
 
     companion object {
         private const val TAG = "RECORD_FRAGMENT_VM"
@@ -36,7 +38,7 @@ class RecordViewModel (
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if(intent?.action == contentIntent) {
-                currentRecord.postValue(intent.getSerializableExtra("track") as TrackDomainModel)
+                currentRecord.postValue(intent.getSerializableExtra(intentExtraName) as TrackDomainModel)
             }
             Log.e(TAG, "$intent")
         }
@@ -64,11 +66,11 @@ class RecordViewModel (
     fun updateCameraBounds() : CameraUpdate {
         val cameraPosition = CameraPosition(LatLng(currentRecord.value?.trackPoints?.last()?.latitude ?: 0.0
             ,currentRecord.value?.trackPoints?.last()?.longitude ?: 0.0),
-        16.7f,
+        17f,
         0f,
         0f)
         val cam = CameraUpdateFactory.newCameraPosition(cameraPosition)
         camera = cam
-        return cam
+        return camera
     }
 }

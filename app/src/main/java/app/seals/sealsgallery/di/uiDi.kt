@@ -25,7 +25,9 @@ val uiDi = module {
     }
 
     viewModel {
-        MyTracksViewModel()
+        MyTracksViewModel(
+            context = androidContext()
+        )
     }
 
     viewModel {
