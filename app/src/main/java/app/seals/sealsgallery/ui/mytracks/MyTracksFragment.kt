@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.domain.map_tools.SetMarkers
 import app.seals.sealsgallery.ui.mytracks.adapters.TrackListRecyclerAdapter
@@ -33,6 +34,7 @@ class MyTracksFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val tracksListSwipe = view.rootView.findViewById<SwipeRefreshLayout>(R.id.swipeRefresh)
         val tracksListRecycler = view.rootView.findViewById<RecyclerView>(R.id.tracksListRecycler)
         val tracksListAdapter = TrackListRecyclerAdapter(vm.tracks, requireContext())
         map = view.rootView.findViewById(R.id.tracksMapView)
@@ -53,6 +55,11 @@ class MyTracksFragment : Fragment() {
                     addMarker(markers.second)
                 }
             }
+        }
+
+        tracksListSwipe.setOnRefreshListener {
+            vm.loadTracksFromFirebase()
+            tracksListSwipe.isRefreshing = false
         }
 
         tracksListRecycler.layoutManager = LinearLayoutManager(requireContext())
