@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.NavOptions
@@ -135,13 +136,13 @@ class MainActivity: AppCompatActivity() {
         navView.menu.setGroupVisible(R.id.nav_group_logged_in, false)
         navView.menu.setGroupVisible(R.id.nav_group_logged_out, true)
         navController.setGraph(R.navigation.mobile_navigation_logged_out)
+        binding.appBarMain.fab.isVisible = false
     }
 
     private fun signedIn() {
         navView.menu.setGroupVisible(R.id.nav_group_logged_in, true)
         navView.menu.setGroupVisible(R.id.nav_group_logged_out, false)
         navController.setGraph(R.navigation.mobile_navigation)
-//        navController.navigate(R.id.nav_my_tracks)
         var drawable : RoundedBitmapDrawable? = null
         CoroutineScope(Dispatchers.IO).launch {
             val bitmap = kotlin.runCatching { Picasso.get().load(auth.currentUser?.photoUrl).get() }
@@ -158,6 +159,7 @@ class MainActivity: AppCompatActivity() {
                 }
             }
         }
+        binding.appBarMain.fab.isVisible = true
     }
 
     private fun setupNavView(navController: NavController) {
@@ -166,9 +168,9 @@ class MainActivity: AppCompatActivity() {
         navView.menu.findItem(R.id.nav_logout).setOnMenuItemClickListener {
             auth.signOut()
             signedOut()
-            navController.navigate(R.id.nav_logout)
             true
         }
+
         navView.menu.findItem(R.id.nav_login).setOnMenuItemClickListener {
             resultLauncher.launch(googleSignInClient.signInIntent)
             true
