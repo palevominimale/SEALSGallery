@@ -1,6 +1,8 @@
 package app.seals.sealsgallery.ui.main
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
@@ -53,6 +55,7 @@ class MainActivity: AppCompatActivity() {
         R.id.nav_login,
     )
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     private var resultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -65,6 +68,14 @@ class MainActivity: AppCompatActivity() {
                     .addOnCompleteListener(this) { signInTask ->
                         if (signInTask.isSuccessful) {
                             signedIn()
+                            val i = Intent()
+                            i.action = getString(R.string.logged_in_intent)
+                            val pi = PendingIntent.getBroadcast(
+                                applicationContext,
+                                0,
+                                i,
+                                PendingIntent.FLAG_UPDATE_CURRENT)
+                            pi.send()
                         }
                     }
             } catch (e: ApiException) {

@@ -41,6 +41,7 @@ class MyTracksFragment : Fragment() {
         map.onCreate(savedInstanceState)
         map.onResume()
         MapsInitializer.initialize(requireContext())
+        vm.initReceiver()
         vm.loadCachedTracks()
 
         tracksListAdapter.selectedItem.observe(viewLifecycleOwner) { track ->
@@ -65,6 +66,7 @@ class MyTracksFragment : Fragment() {
         tracksListRecycler.layoutManager = LinearLayoutManager(requireContext())
         tracksListRecycler.adapter = tracksListAdapter
         tracksListAdapter.notifyDataSetChanged()
+
         vm.tracks.observe(viewLifecycleOwner) {
             tracksListAdapter.notifyDataSetChanged()
         }
