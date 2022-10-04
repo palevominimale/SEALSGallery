@@ -6,14 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import app.seals.sealsgallery.R
+import app.seals.sealsgallery.domain.map_tools.SetMarkers
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RecordFragment : Fragment() {
 
-    private lateinit var map : MapView
     private val vm : RecordViewModel by viewModel()
+    private val setMarkers : SetMarkers by inject()
+    private lateinit var map : MapView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,9 +37,12 @@ class RecordFragment : Fragment() {
             map.getMapAsync { googleMap ->
                 googleMap.apply {
                     val options = vm.drawTrack()
+                    val markers = setMarkers.invoke(options)
                     clear()
                     addPolyline(options)
                     moveCamera(vm.updateCameraBounds())
+                    addMarker(markers.first)
+                    addMarker(markers.second)
                 }
             }
         }

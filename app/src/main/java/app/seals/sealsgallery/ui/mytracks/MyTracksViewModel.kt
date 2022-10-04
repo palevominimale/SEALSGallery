@@ -37,6 +37,7 @@ class MyTracksViewModel (
                         children.getValue(TrackDomainModel::class.java) ?: TrackDomainModel()
                     )
                     tracks.postValue(tracksList)
+
                 } catch (e: Exception) {
                     Log.e("MTVM", "$e")
                     e.printStackTrace()

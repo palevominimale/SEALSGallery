@@ -1,7 +1,9 @@
 package app.seals.sealsgallery.di
 
 import app.seals.sealsgallery.domain.map_tools.DrawTrack
+import app.seals.sealsgallery.domain.map_tools.SetMarkers
 import app.seals.sealsgallery.domain.map_tools.UpdateBounds
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val domainDi = module {
@@ -11,5 +13,11 @@ val domainDi = module {
 
     single {
         UpdateBounds()
+    }
+
+    single {
+        SetMarkers(
+            context = androidContext()
+        )
     }
 }

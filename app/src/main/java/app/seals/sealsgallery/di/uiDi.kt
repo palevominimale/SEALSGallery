@@ -2,6 +2,7 @@ package app.seals.sealsgallery.di
 
 import app.seals.sealsgallery.ui.feed.FeedViewModel
 import app.seals.sealsgallery.ui.main.MainActivityViewModel
+import app.seals.sealsgallery.ui.mytracks.MyTracksFragment
 import app.seals.sealsgallery.ui.mytracks.MyTracksViewModel
 import app.seals.sealsgallery.ui.record.RecordViewModel
 import app.seals.sealsgallery.ui.settings.SettingsViewModel
