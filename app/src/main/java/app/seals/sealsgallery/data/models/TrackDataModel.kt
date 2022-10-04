@@ -11,7 +11,7 @@ data class TrackDataModel (
     @PrimaryKey                         val startTime: Long = 0L,
     @ColumnInfo(name = "endTime")       val endTime: Long = 0L,
     @ColumnInfo(name = "color")         val color: Int = Color.BLUE,
-    @ColumnInfo(name = "trackPoints")   val trackPoints: List<TrackPointDataModel> = listOf(
+    @ColumnInfo(name = "trackPoints")   val trackPoints: MutableList<TrackPointDataModel> = mutableListOf(
         TrackPointDataModel()
     ),
     @ColumnInfo(name = "photos")        val photos: List<String> = listOf("")

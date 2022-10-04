@@ -7,6 +7,6 @@ data class TrackDomainModel (
         var startTime: Long = 0L,
         var endTime: Long = 0L,
         var color: Int = Color.BLUE,
-        val trackPoints: List<TrackPointDomainModel> = mutableListOf(TrackPointDomainModel()),
+        val trackPoints: MutableList<TrackPointDomainModel> = mutableListOf(TrackPointDomainModel()),
         var photos: List<String> = listOf("")
 ) : Serializable

@@ -75,7 +75,7 @@ private fun List<TrackDataModel>.mapListToDomain(): List<TrackDomainModel> {
 }
 
 private fun TrackDomainModel.mapDomainToData(): TrackDataModel {
-    val mappedTrackPoint: List<TrackPointDataModel> = mutableListOf<TrackPointDataModel>().apply {
+    val mappedTrackPoint: MutableList<TrackPointDataModel> = mutableListOf<TrackPointDataModel>().apply {
         this@mapDomainToData.trackPoints.forEach {
             this.add(it.mapDomainToData())
         }
@@ -108,7 +108,7 @@ private fun TrackPointDataModel.mapDataToDomain(): TrackPointDomainModel {
 }
 
 private fun TrackDataModel.mapDataToDomain(): TrackDomainModel {
-    val mappedTrackPoint: List<TrackPointDomainModel> = mutableListOf<TrackPointDomainModel>().apply {
+    val mappedTrackPoint: MutableList<TrackPointDomainModel> = mutableListOf<TrackPointDomainModel>().apply {
         this@mapDataToDomain.trackPoints.forEach {
             this.add(it.mapDataToDomain())
         }

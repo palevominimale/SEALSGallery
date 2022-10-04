@@ -31,7 +31,8 @@ val uiDi = module {
         MyTracksViewModel(
             context = androidContext(),
             drawTrack = get(),
-            updateBounds = get()
+            updateBounds = get(),
+            roomDB = get()
         )
     }
 

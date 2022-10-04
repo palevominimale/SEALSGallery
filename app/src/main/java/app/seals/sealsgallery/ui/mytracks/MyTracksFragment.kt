@@ -39,7 +39,8 @@ class MyTracksFragment : Fragment() {
         map.onCreate(savedInstanceState)
         map.onResume()
         MapsInitializer.initialize(requireContext())
-        vm.loadTracks()
+        vm.loadCachedTracks()
+
         tracksListAdapter.selectedItem.observe(viewLifecycleOwner) { track ->
             map.getMapAsync { googleMap ->
                 googleMap.apply {
@@ -53,6 +54,7 @@ class MyTracksFragment : Fragment() {
                 }
             }
         }
+
         tracksListRecycler.layoutManager = LinearLayoutManager(requireContext())
         tracksListRecycler.adapter = tracksListAdapter
         tracksListAdapter.notifyDataSetChanged()
