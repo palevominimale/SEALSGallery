@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import app.seals.sealsgallery.R
+
 class LoggedOutFragment : Fragment() {
 
     override fun onCreateView(

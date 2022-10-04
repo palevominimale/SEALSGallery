@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    id 'org.jetbrains.kotlin.kapt'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
@@ -40,6 +41,8 @@ dependencies {
 
     def koin= '3.2.0'
     def coroutines = "1.6.4"
+    def room = '2.4.3'
+    def retrofit = '2.9.0'
 
     //Firebase
     implementation platform('com.google.firebase:firebase-bom:30.4.1')
@@ -54,6 +57,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.2'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.android.material:material:1.6.1'
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.8'
@@ -78,6 +82,11 @@ dependencies {
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+
+    //RoomDB
+    kapt "androidx.room:room-compiler:$room"
+    annotationProcessor "androidx.room:room-compiler:$room"
+    implementation "androidx.room:room-runtime:$room"
 
     //Tests
     testImplementation 'junit:junit:4.13.2'
