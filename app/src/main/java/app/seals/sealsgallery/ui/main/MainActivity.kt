@@ -3,14 +3,16 @@ package app.seals.sealsgallery.ui.main
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.RoundedBitmapDrawable
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -60,18 +62,15 @@ class MainActivity: AppCompatActivity() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
             try {
                 val account = task.getResult(ApiException::class.java)!!
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
                 val credential = GoogleAuthProvider.getCredential(account.idToken, null)
                 auth.signInWithCredential(credential)
                     .addOnCompleteListener(this) { signInTask ->
                         if (signInTask.isSuccessful) {
                             signedIn()
-                        } else {
-                            Log.w(TAG, "signInWithCredential:failure", signInTask.exception)
                         }
                     }
             } catch (e: ApiException) {
-                Log.w(TAG, "Google sign in failed", e)
+                e.printStackTrace()
             }
         }
     }
@@ -80,7 +79,6 @@ class MainActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         checkPermissions.invoke()
         binding = ActivityMainBinding.inflate(layoutInflater)
-
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -98,7 +96,6 @@ class MainActivity: AppCompatActivity() {
         if (auth.currentUser != null) {
             signedIn()
         }
-
     }
 
     private fun setupFab() {
@@ -133,16 +130,18 @@ class MainActivity: AppCompatActivity() {
     }
 
     private fun signedOut() {
+        requireViewById<ImageView>(R.id.userImageView).setImageResource(R.drawable.no_accounts_48px)
+        requireViewById<TextView>(R.id.UserNameTextView).text = getString(R.string.nav_header_not_logged)
         navView.menu.setGroupVisible(R.id.nav_group_logged_in, false)
         navView.menu.setGroupVisible(R.id.nav_group_logged_out, true)
-        findViewById<ImageView>(R.id.userImageView).setImageResource(R.drawable.no_accounts_48px)
-        findViewById<TextView>(R.id.UserNameTextView).text = getString(R.string.nav_header_not_logged)
+        navController.setGraph(R.navigation.mobile_navigation_logged_out)
     }
 
     private fun signedIn() {
         navView.menu.setGroupVisible(R.id.nav_group_logged_in, true)
         navView.menu.setGroupVisible(R.id.nav_group_logged_out, false)
-        navController.navigate(R.id.nav_my_tracks)
+        navController.setGraph(R.navigation.mobile_navigation)
+//        navController.navigate(R.id.nav_my_tracks)
         var drawable : RoundedBitmapDrawable? = null
         CoroutineScope(Dispatchers.IO).launch {
             val bitmap = kotlin.runCatching { Picasso.get().load(auth.currentUser?.photoUrl).get() }
@@ -151,8 +150,12 @@ class MainActivity: AppCompatActivity() {
             }
         }.invokeOnCompletion {
             runOnUiThread {
-                findViewById<ImageView>(R.id.userImageView).setImageDrawable(drawable)
-                findViewById<TextView>(R.id.UserNameTextView).text = auth.currentUser?.displayName
+                try {
+                    findViewById<ImageView>(R.id.userImageView).setImageDrawable(drawable)
+                    findViewById<TextView>(R.id.UserNameTextView).text = auth.currentUser?.displayName
+                } catch (e : Exception) {
+                    e.printStackTrace()
+                }
             }
         }
     }
@@ -170,9 +173,5 @@ class MainActivity: AppCompatActivity() {
             resultLauncher.launch(googleSignInClient.signInIntent)
             true
         }
-    }
-
-    companion object {
-        private const val TAG = "MAIN_ACTIVITY"
     }
 }

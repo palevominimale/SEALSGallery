@@ -21,7 +21,7 @@
         android:layout_marginTop="@dimen/nav_header_vertical_spacing_big"
         android:contentDescription="@string/nav_header_desc"
         android:foregroundGravity="center"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        app:srcCompat="@drawable/no_accounts_48px" />
 
     <TextView
         android:id="@+id/UserNameTextView"
