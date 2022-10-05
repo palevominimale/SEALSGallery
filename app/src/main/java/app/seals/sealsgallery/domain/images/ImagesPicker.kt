@@ -2,7 +2,7 @@ package app.seals.sealsgallery.domain.images
 
 import android.content.Context
 import android.database.Cursor
-import android.media.ExifInterface
+import androidx.exifinterface.media.ExifInterface
 import android.net.Uri
 import android.provider.MediaStore
 import app.seals.sealsgallery.domain.models.ImageDomainModel
