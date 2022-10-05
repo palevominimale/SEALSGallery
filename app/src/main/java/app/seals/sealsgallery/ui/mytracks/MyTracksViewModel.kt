@@ -80,18 +80,13 @@ class MyTracksViewModel (
         CoroutineScope(Dispatchers.IO).launch {
             res.forEach {
                 val thumb = ThumbnailUtils.extractThumbnail(
-                    MediaStore.Images.Media.getBitmap(
-                        context.contentResolver,
-                        it.uri
-                    ),
-                    150,
-                    150
-                )
+                    MediaStore.Images.Media.getBitmap(context.contentResolver, it.uri),
+                    150,150)
                 markers.add(MarkerOptions().apply {
-                    Log.e("MTF_", "$it")
                     position(it.latLng ?: LatLng(0.0, 0.0))
                     val icon = imagesOperations.normalizeBitmap(it.orientation ?: 0, thumb)
                     icon(BitmapDescriptorFactory.fromBitmap(icon))
+                    title(it.uri.toString())
                 })
             }
         }.invokeOnCompletion {
