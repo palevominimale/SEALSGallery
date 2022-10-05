@@ -31,7 +31,7 @@ class MyTracksFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_my_tracks, container, false)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "Range")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val tracksListSwipe = view.rootView.findViewById<SwipeRefreshLayout>(R.id.swipeRefresh)
@@ -44,7 +44,19 @@ class MyTracksFragment : Fragment() {
         vm.initReceiver()
         vm.loadCachedTracks()
 
+        vm.currentTrackImages.observe(viewLifecycleOwner) { markerList ->
+            map.getMapAsync { googleMap ->
+                googleMap.apply {
+                    markerList.forEach {
+                        addMarker(it)
+                    }
+                }
+            }
+
+        }
+
         tracksListAdapter.selectedItem.observe(viewLifecycleOwner) { track ->
+            vm.loadImages(track)
             map.getMapAsync { googleMap ->
                 googleMap.apply {
                     val options = vm.drawTrack(track)

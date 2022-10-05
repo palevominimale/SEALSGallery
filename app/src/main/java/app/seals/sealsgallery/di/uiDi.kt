@@ -32,7 +32,8 @@ val uiDi = module {
             context = androidContext(),
             drawTrack = get(),
             updateBounds = get(),
-            roomDB = get()
+            roomDB = get(),
+            imagesPicker = get()
         )
     }
 

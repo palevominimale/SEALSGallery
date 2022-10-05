@@ -1,5 +1,6 @@
 package app.seals.sealsgallery.di
 
+import app.seals.sealsgallery.domain.images.ImagesPicker
 import app.seals.sealsgallery.domain.map_tools.DrawTrack
 import app.seals.sealsgallery.domain.map_tools.SetMarkers
 import app.seals.sealsgallery.domain.map_tools.UpdateBounds
@@ -17,6 +18,12 @@ val domainDi = module {
 
     single {
         SetMarkers(
+            context = androidContext()
+        )
+    }
+
+    single {
+        ImagesPicker(
             context = androidContext()
         )
     }
