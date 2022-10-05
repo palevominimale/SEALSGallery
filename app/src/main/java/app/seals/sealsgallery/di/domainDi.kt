@@ -1,5 +1,6 @@
 package app.seals.sealsgallery.di
 
+import app.seals.sealsgallery.domain.images.ImagesOperations
 import app.seals.sealsgallery.domain.images.ImagesPicker
 import app.seals.sealsgallery.domain.map_tools.DrawTrack
 import app.seals.sealsgallery.domain.map_tools.SetMarkers
@@ -26,5 +27,9 @@ val domainDi = module {
         ImagesPicker(
             context = androidContext()
         )
+    }
+
+    single {
+        ImagesOperations()
     }
 }

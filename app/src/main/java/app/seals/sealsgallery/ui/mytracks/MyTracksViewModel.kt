@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.seals.sealsgallery.R
+import app.seals.sealsgallery.domain.images.ImagesOperations
 import app.seals.sealsgallery.domain.images.ImagesPicker
 import app.seals.sealsgallery.domain.interfaces.TrackRepository
 import app.seals.sealsgallery.domain.map_tools.DrawTrack
@@ -27,13 +28,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+
 @SuppressLint("StaticFieldLeak")
 class MyTracksViewModel (
     private val context: Context,
     private val drawTrack: DrawTrack,
     private val updateBounds: UpdateBounds,
     private val roomDB: TrackRepository,
-    private val imagesPicker: ImagesPicker
+    private val imagesPicker: ImagesPicker,
+    private val imagesOperations: ImagesOperations,
 ) : ViewModel() {
 
     val tracks = MutableLiveData<List<TrackDomainModel>>()
@@ -87,7 +90,8 @@ class MyTracksViewModel (
                 markers.add(MarkerOptions().apply {
                     Log.e("MTF_", "$it")
                     position(it.latLng ?: LatLng(0.0, 0.0))
-                    icon(BitmapDescriptorFactory.fromBitmap(thumb))
+                    val icon = imagesOperations.normalizeBitmap(it.orientation ?: 0, thumb)
+                    icon(BitmapDescriptorFactory.fromBitmap(icon))
                 })
             }
         }.invokeOnCompletion {

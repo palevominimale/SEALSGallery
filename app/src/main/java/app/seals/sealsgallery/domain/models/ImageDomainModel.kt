@@ -2,9 +2,11 @@ package app.seals.sealsgallery.domain.models
 
 import android.net.Uri
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.StreetViewPanoramaOrientation
 import java.io.Serializable
 
 data class ImageDomainModel (
     val uri: Uri? = null,
-    val latLng: LatLng? = null
+    val latLng: LatLng? = null,
+    val orientation: Int? = null
 ) : Serializable

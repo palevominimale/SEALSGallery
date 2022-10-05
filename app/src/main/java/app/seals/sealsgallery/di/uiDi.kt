@@ -33,7 +33,8 @@ val uiDi = module {
             drawTrack = get(),
             updateBounds = get(),
             roomDB = get(),
-            imagesPicker = get()
+            imagesPicker = get(),
+            imagesOperations = get()
         )
     }
 

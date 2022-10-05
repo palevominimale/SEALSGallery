@@ -33,14 +33,17 @@ class ImagesPicker(
                 imageId = cursor.getLong(cID)
                 val uriImage = Uri.withAppendedPath(uri, "$imageId")
                 val originalUri = MediaStore.setRequireOriginal(uriImage)
-                val stream = cr.openInputStream(originalUri)
+                val ei = ExifInterface(cr.openInputStream(originalUri)!!)
                 val latLong = FloatArray(2)
-                if(ExifInterface(stream!!).getLatLong(latLong)){
+                if(ei.getLatLong(latLong)){
+                    ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+                    val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
                     val latLngImage = LatLng(latLong[0].toDouble(),latLong[1].toDouble())
                     images.add(
                         ImageDomainModel(
                             uri = uriImage,
-                            latLng = latLngImage
+                            latLng = latLngImage,
+                            orientation = orientation
                         )
                     )
                 }
