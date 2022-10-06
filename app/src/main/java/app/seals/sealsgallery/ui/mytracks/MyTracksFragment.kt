@@ -72,7 +72,7 @@ class MyTracksFragment : Fragment() {
                     addMarker(markers.second)
                 }
             CoroutineScope(Dispatchers.IO).launch {
-                vm.loadPhotosAsMarkers(track).collect { marker ->
+                vm.loadPhotos(track).collect { marker ->
                     requireActivity().runOnUiThread {
                             googleMap.addMarker(marker)
                         }

@@ -24,7 +24,9 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.launch
 
 
 @SuppressLint("StaticFieldLeak")
@@ -70,20 +72,21 @@ class MyTracksViewModel (
         }
     }
 
-    suspend fun loadPhotosAsMarkers(track: TrackDomainModel) = flow {
-    val res = imagesPicker.invoke(track)
-        res.forEach { trackModel ->
-            val thumb = ThumbnailUtils.extractThumbnail(
-                MediaStore.Images.Media.getBitmap(context.contentResolver, trackModel.uri),
-                150, 150
-            )
-            val marker = MarkerOptions().apply {
-                position(trackModel.latLng ?: LatLng(0.0, 0.0))
-                val icon = imagesOperations.normalizeBitmap(trackModel.orientation ?: 0, thumb)
-                icon(BitmapDescriptorFactory.fromBitmap(icon))
-                title(trackModel.uri.toString())
+    suspend fun loadPhotos(track: TrackDomainModel) = channelFlow {
+        imagesPicker.invoke(track).forEach { trackModel ->
+            CoroutineScope(coroutineContext).launch {
+                val thumb = ThumbnailUtils.extractThumbnail(
+                    MediaStore.Images.Media.getBitmap(context.contentResolver, trackModel.uri),
+                    150, 150
+                )
+                val marker = MarkerOptions().apply {
+                    position(trackModel.latLng ?: LatLng(0.0, 0.0))
+                    val icon = imagesOperations.normalizeBitmap(trackModel.orientation ?: 0, thumb)
+                    icon(BitmapDescriptorFactory.fromBitmap(icon))
+                    title(trackModel.uri.toString())
+                }
+                send(marker)
             }
-            emit(marker)
         }
     }
 

@@ -51,5 +51,4 @@ class ImagesOperations {
         canvas.drawBitmap(bitmap, rect, rect, paint)
         return output
     }
-
 }
