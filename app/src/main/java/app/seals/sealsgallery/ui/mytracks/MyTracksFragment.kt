@@ -17,6 +17,9 @@ import app.seals.sealsgallery.domain.map_tools.SetMarkers
 import app.seals.sealsgallery.ui.mytracks.adapters.TrackListRecyclerAdapter
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -57,19 +60,7 @@ class MyTracksFragment : Fragment() {
             }
         }
 
-        vm.currentTrackImages.observe(viewLifecycleOwner) { markerList ->
-            map.getMapAsync { googleMap ->
-                googleMap.apply {
-                    markerList.forEach {
-                        addMarker(it)
-                    }
-                }
-            }
-
-        }
-
         tracksListAdapter.selectedItem.observe(viewLifecycleOwner) { track ->
-            vm.loadImages(track)
             map.getMapAsync { googleMap ->
                 googleMap.apply {
                     val options = vm.drawTrack(track)
@@ -79,6 +70,13 @@ class MyTracksFragment : Fragment() {
                     moveCamera(vm.updateCameraBounds(track))
                     addMarker(markers.first)
                     addMarker(markers.second)
+                }
+            CoroutineScope(Dispatchers.IO).launch {
+                vm.loadPhotosAsMarkers(track).collect { marker ->
+                    requireActivity().runOnUiThread {
+                            googleMap.addMarker(marker)
+                        }
+                    }
                 }
             }
         }

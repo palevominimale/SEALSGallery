@@ -24,9 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.flow
 
 
 @SuppressLint("StaticFieldLeak")
@@ -40,7 +38,6 @@ class MyTracksViewModel (
 ) : ViewModel() {
 
     val tracks = MutableLiveData<List<TrackDomainModel>>()
-    val currentTrackImages = MutableLiveData<List<MarkerOptions>>()
     private lateinit var camera : CameraUpdate
     private val tracksList = mutableListOf(TrackDomainModel())
     private val refName = context.getString(R.string.firebase_reference_name)
@@ -67,30 +64,26 @@ class MyTracksViewModel (
                     if(tracksList.size>0) tracksList.removeLast()
                     val track = intent.getSerializableExtra(intentExtraName) as TrackDomainModel
                     tracksList.add(track)
-                    loadImages(track)
                     tracks.postValue(tracksList)
                 }
             }
         }
     }
 
-    fun loadImages(track: TrackDomainModel) {
-        val markers = mutableListOf<MarkerOptions>()
-        val res = imagesPicker.invoke(track)
-        CoroutineScope(Dispatchers.IO).launch {
-            res.forEach {
-                val thumb = ThumbnailUtils.extractThumbnail(
-                    MediaStore.Images.Media.getBitmap(context.contentResolver, it.uri),
-                    150,150)
-                markers.add(MarkerOptions().apply {
-                    position(it.latLng ?: LatLng(0.0, 0.0))
-                    val icon = imagesOperations.normalizeBitmap(it.orientation ?: 0, thumb)
-                    icon(BitmapDescriptorFactory.fromBitmap(icon))
-                    title(it.uri.toString())
-                })
+    suspend fun loadPhotosAsMarkers(track: TrackDomainModel) = flow {
+    val res = imagesPicker.invoke(track)
+        res.forEach { trackModel ->
+            val thumb = ThumbnailUtils.extractThumbnail(
+                MediaStore.Images.Media.getBitmap(context.contentResolver, trackModel.uri),
+                150, 150
+            )
+            val marker = MarkerOptions().apply {
+                position(trackModel.latLng ?: LatLng(0.0, 0.0))
+                val icon = imagesOperations.normalizeBitmap(trackModel.orientation ?: 0, thumb)
+                icon(BitmapDescriptorFactory.fromBitmap(icon))
+                title(trackModel.uri.toString())
             }
-        }.invokeOnCompletion {
-            currentTrackImages.postValue(markers)
+            emit(marker)
         }
     }
 

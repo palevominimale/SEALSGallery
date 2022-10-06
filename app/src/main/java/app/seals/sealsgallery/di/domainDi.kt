@@ -23,13 +23,13 @@ val domainDi = module {
         )
     }
 
-    single {
+    factory {
         ImagesPicker(
             context = androidContext()
         )
     }
 
-    single {
+    factory {
         ImagesOperations()
     }
 }
