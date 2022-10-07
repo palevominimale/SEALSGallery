@@ -5,7 +5,6 @@ import android.app.Activity
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -35,6 +34,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@SuppressLint("UnspecifiedImmutableFlag")
 class MainActivity: AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -56,7 +56,6 @@ class MainActivity: AppCompatActivity() {
         R.id.nav_login,
     )
 
-    @SuppressLint("UnspecifiedImmutableFlag")
     private var resultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->

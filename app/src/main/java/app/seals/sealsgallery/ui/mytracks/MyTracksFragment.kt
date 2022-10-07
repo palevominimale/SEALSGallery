@@ -81,8 +81,10 @@ class MyTracksFragment : Fragment() {
             vm.loadTracksFromFirebase()
             tracksListSwipe.isRefreshing = false
         }
-
-        tracksListRecycler.layoutManager = LinearLayoutManager(requireContext())
+        tracksListRecycler.layoutManager = LinearLayoutManager(requireContext()).apply {
+            reverseLayout = true
+            stackFromEnd = true
+        }
         tracksListRecycler.adapter = tracksListAdapter
 
         vm.tracks.observe(viewLifecycleOwner) {
