@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -93,7 +94,6 @@ class MainActivity: AppCompatActivity() {
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-
         val drawerLayout = binding.drawerLayout
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
@@ -116,6 +116,9 @@ class MainActivity: AppCompatActivity() {
                 if(recordIsActive) {
                     val intent = Intent(this, LocationService::class.java)
                     intent.action = getString(R.string.stop_intent)
+                    val i = Intent()
+                    i.action = getString(R.string.stop_intent)
+                    PendingIntent.getBroadcast(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT).send()
                     startService(intent)
                     recordIsActive = false
                     binding.appBarMain.fab.setImageResource(R.drawable.radio_button_checked_40px)

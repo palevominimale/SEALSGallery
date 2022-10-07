@@ -53,6 +53,7 @@ class MyTracksViewModel (
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
+            Log.e("MTVM_", "${intent?.action}")
             when(intent?.action) {
                 contentIntent -> {
                     if(tracksList.size>0) tracksList.removeLast()
@@ -63,10 +64,7 @@ class MyTracksViewModel (
                     loadTracksFromFirebase()
                 }
                 stopIntent -> {
-                    if(tracksList.size>0) tracksList.removeLast()
-                    val track = intent.getSerializableExtra(intentExtraName) as TrackDomainModel
-                    tracksList.add(track)
-                    tracks.postValue(tracksList)
+                    loadTracksFromFirebase()
                 }
             }
         }

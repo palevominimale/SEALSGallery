@@ -20,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import org.koin.android.ext.android.inject
 import java.time.Instant
 
-@SuppressLint("MissingPermission")
+@SuppressLint("MissingPermission, UnspecifiedImmutableFlag")
 class LocationService : Service() {
 
     private val context by inject<Context>()
@@ -87,9 +87,9 @@ class LocationService : Service() {
             requestLocation()
             val i = Intent()
             i.action = getString(R.string.start_intent)
-            val pi = PendingIntent.getBroadcast(applicationContext, 0, i, PendingIntent.FLAG_IMMUTABLE)
+            val pi = PendingIntent.getBroadcast(applicationContext, 0, i, PendingIntent.FLAG_UPDATE_CURRENT)
             pi.send()
-            Log.e(TAG, "$intent")
+            Log.e(TAG, "$i")
         }
         return super.onStartCommand(intent, flags, startId)
     }

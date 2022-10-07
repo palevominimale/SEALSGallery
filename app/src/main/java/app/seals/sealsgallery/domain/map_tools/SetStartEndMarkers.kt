@@ -9,7 +9,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 
-class SetMarkers(
+class SetStartEndMarkers(
     private val context: Context
 ) {
 
@@ -17,11 +17,13 @@ class SetMarkers(
         val startMarker = MarkerOptions().apply {
             position(options.points.first())
             icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.location_on_48px)!!))
+            zIndex(100f)
 
         }
         val endMarker = MarkerOptions().apply {
             position(options.points.last())
             icon(BitmapDescriptorFactory.fromBitmap(getBitmap(R.drawable.where_to_vote_48px)!!))
+            zIndex(100f)
         }
         return Pair(startMarker, endMarker)
     }

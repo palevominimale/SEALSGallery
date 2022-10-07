@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import app.seals.sealsgallery.R
-import app.seals.sealsgallery.domain.map_tools.SetMarkers
+import app.seals.sealsgallery.domain.map_tools.SetStartEndMarkers
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
 import org.koin.android.ext.android.inject
@@ -15,7 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class RecordFragment : Fragment() {
 
     private val vm : RecordViewModel by viewModel()
-    private val setMarkers : SetMarkers by inject()
+    private val setMarkers : SetStartEndMarkers by inject()
     private lateinit var map : MapView
 
     override fun onCreateView(
