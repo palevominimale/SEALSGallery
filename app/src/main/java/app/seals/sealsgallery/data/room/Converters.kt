@@ -19,16 +19,6 @@ class Converters {
     fun trackPointDataListToString(list: List<TrackPointDataModel>): String {
         return gson.toJson(list)
     }
-    @TypeConverter
-    fun stringToTrackPointData(data: String): TrackPointDataModel {
-        val listType: Type = object : TypeToken<TrackPointDataModel>() {}.type
-        return gson.fromJson(data, listType)
-    }
-
-    @TypeConverter
-    fun trackPointDataToString(trackPointData: TrackPointDataModel): String {
-        return gson.toJson(trackPointData)
-    }
 
     @TypeConverter
     fun stringToListStrings(data: String): List<String> {

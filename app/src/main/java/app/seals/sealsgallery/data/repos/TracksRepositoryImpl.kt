@@ -25,10 +25,6 @@ class TracksRepositoryImpl(context: Context) : TrackRepository {
         return db.getAll() ?: listOf(TrackDataModel())
     }
 
-    fun getAllForDomain(): List<TrackDomainModel> {
-        return getAll().mapListToDomain()
-    }
-
     override fun addTrack(track: TrackDataModel) {
         db.addTrack(track)
     }
