@@ -42,18 +42,19 @@ class MyTracksViewModel (
     val tracks = MutableLiveData<List<TrackDomainModel>>()
     private lateinit var camera : CameraUpdate
     private val tracksList = mutableListOf(TrackDomainModel())
-    private val refName = context.getString(R.string.firebase_reference_name)
+    private val refMainNode = context.getString(R.string.firebase_reference_name)
+    private val refTracksNode = context.getString(R.string.firebase_reference_tracks_name)
     private val contentIntent = context.getString(R.string.track_content_intent)
     private val stopIntent = context.getString(R.string.stop_intent)
     private val loggedInIntent = context.getString(R.string.logged_in_intent)
     private val intentExtraName = context.getString(R.string.track_intent_name)
     private val db = FirebaseDatabase.getInstance()
     private val auth = FirebaseAuth.getInstance()
-    private val ref = db.getReference(refName).child(auth.currentUser?.uid.toString())
+    private val uid = auth.currentUser?.uid.toString()
+    private val ref = db.getReference(refMainNode).child(uid).child(refTracksNode)
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            Log.e("MTVM_", "${intent?.action}")
             when(intent?.action) {
                 contentIntent -> {
                     if(tracksList.size>0) tracksList.removeLast()

@@ -25,7 +25,8 @@ class LocationService : Service() {
 
     private val context by inject<Context>()
 
-    private val refName = context.getString(R.string.firebase_reference_name)
+    private val refMainNode = context.getString(R.string.firebase_reference_name)
+    private val refTracksNode = context.getString(R.string.firebase_reference_tracks_name)
     private val refTrackPoints = context.getString(R.string.firebase_reference_points_node_name)
     private val refEndTime = context.getString(R.string.firebase_reference_end_time_name)
     private val intentExtraName = context.getString(R.string.track_intent_name)
@@ -33,7 +34,8 @@ class LocationService : Service() {
     private val db = FirebaseDatabase.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private val now = Instant.now().epochSecond
-    private val ref = db.getReference(refName).child(auth.currentUser?.uid.toString()).child(now.toString())
+    private val uid = auth.currentUser?.uid.toString()
+    private val ref = db.getReference(refMainNode).child(uid).child(refTracksNode).child(now.toString())
     private val track = TrackDomainModel()
     private var id = 0
     private var interval = context.getSharedPreferences(
@@ -101,7 +103,7 @@ class LocationService : Service() {
         ref.child(track.startTime.toString())
         ref.setValue(track)
         val locationRequest = LocationRequest.create().apply {
-            interval = this@LocationService.interval.toLongOrNull() ?: 3L
+            interval = (this@LocationService.interval.toLongOrNull()?: 3L)*1000
             fastestInterval = MIN_INTERVAL
             priority = Priority.PRIORITY_HIGH_ACCURACY
         }
