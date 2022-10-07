@@ -1,8 +1,10 @@
 package app.seals.sealsgallery.data.models
 
 import androidx.room.ColumnInfo
+import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+@Entity(tableName = "User")
 data class UserDataModel(
     @PrimaryKey                                 var uid: String = "",
     @ColumnInfo(name = "name")                  var name: String = "",

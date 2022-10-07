@@ -10,19 +10,19 @@ import app.seals.sealsgallery.data.models.TrackDataModel
 
 @Database(entities = [TrackDataModel::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
-abstract class RoomDB: RoomDatabase() {
+abstract class TracksRoomDB: RoomDatabase() {
 
     abstract fun dao(): TrackRepositoryDAO
 
     companion object {
-        private var INSTANCE: RoomDB? = null
+        private var INSTANCE: TracksRoomDB? = null
 
-        fun getInstance(context: Context): RoomDB? {
-            if (INSTANCE == null) synchronized(RoomDB::class) {
+        fun getInstance(context: Context): TracksRoomDB? {
+            if (INSTANCE == null) synchronized(TracksRoomDB::class) {
                 INSTANCE = Room.databaseBuilder(
 
                     context.applicationContext,
-                    RoomDB::class.java,
+                    TracksRoomDB::class.java,
                     "tracks.db"
                 ).allowMainThreadQueries()
                     .build()
