@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:background="@drawable/recycler_bg"
+    android:layout_height="53dp"
+    android:background="@drawable/recycler_bg_selector"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:layout_marginBottom="5dp"
@@ -39,12 +39,4 @@
         app:layout_constraintStart_toStartOf="@id/trackItemCity"
         />
 
-    <TextView
-        android:id="@+id/trackId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/id"
-        app:layout_constraintTop_toBottomOf="@id/trackItemTime"
-        app:layout_constraintStart_toStartOf="@id/trackItemTime"
-        />
 </androidx.constraintlayout.widget.ConstraintLayout>

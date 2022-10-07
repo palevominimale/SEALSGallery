@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -86,9 +87,9 @@ class MyTracksFragment : Fragment() {
             stackFromEnd = true
         }
         tracksListRecycler.adapter = tracksListAdapter
-
         vm.tracks.observe(viewLifecycleOwner) {
             tracksListAdapter.notifyItemRangeChanged(0, it.size-1)
+            tracksListAdapter.selectLastItem()
         }
     }
 }

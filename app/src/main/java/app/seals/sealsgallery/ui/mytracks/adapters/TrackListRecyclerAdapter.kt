@@ -13,18 +13,20 @@ import app.seals.sealsgallery.R
 import app.seals.sealsgallery.domain.models.TrackDomainModel
 import java.time.Instant
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
+@SuppressLint("SetTextI18n")
 class TrackListRecyclerAdapter (
     private val tracks : MutableLiveData<List<TrackDomainModel>>,
     private val context: Context
 ) : RecyclerView.Adapter<TrackListRecyclerAdapter.ViewHolder>() {
 
     val selectedItem = MutableLiveData<TrackDomainModel>()
+    private var selectedPosition = RecyclerView.NO_POSITION
 
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         val city: TextView = item.findViewById(R.id.trackItemCity)
         val time: TextView = item.findViewById(R.id.trackItemTime)
-        val id: TextView = item.findViewById(R.id.trackId)
     }
 
     override fun getItemCount(): Int = tracks.value?.size ?: 0
@@ -34,13 +36,13 @@ class TrackListRecyclerAdapter (
             .inflate(R.layout.track_item, parent, false)
         return ViewHolder(itemView)
     }
-
-    @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    @SuppressLint("RecyclerView")
+    override fun onBindViewHolder(holder: ViewHolder,  position: Int) {
+        holder.itemView.isSelected = selectedPosition == holder.adapterPosition
         val material = tracks.value?.get(position) ?: TrackDomainModel()
         material.run{
             try {
-                holder.city.text = "${
+                holder.city.text = "$startTime ${
                     Geocoder(context).getFromLocation(
                     this.trackPoints[0].latitude,
                     this.trackPoints[0].longitude,
@@ -55,13 +57,22 @@ class TrackListRecyclerAdapter (
                 e.printStackTrace()
             }
 
-            val t = Instant.ofEpochSecond(this.startTime/1000)
+            val t1 = Instant.ofEpochSecond(this.startTime/1000)
                 .atZone(ZoneId.systemDefault())
-            holder.id.text = "${this.startTime}"
-            holder.time.text = "${t.dayOfMonth}.${t.monthValue}.${t.year} ${t.hour}:${t.minute}"
+            val t2 = Instant.ofEpochSecond(this.endTime/1000)
+                .atZone(ZoneId.systemDefault())
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+            holder.time.text = "${t1.format(formatter)} - ${t2.format(formatter)}"
             holder.itemView.setOnClickListener {
                 selectedItem.postValue(material)
+                notifyItemChanged(selectedPosition)
+                selectedPosition = holder.adapterPosition
+                notifyItemChanged(selectedPosition)
             }
         }
+    }
+
+    fun selectLastItem() {
+        selectedItem.postValue(tracks.value?.last() ?: TrackDomainModel())
     }
 }
