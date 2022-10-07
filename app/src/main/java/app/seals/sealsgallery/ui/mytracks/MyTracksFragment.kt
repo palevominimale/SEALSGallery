@@ -91,5 +91,6 @@ class MyTracksFragment : Fragment() {
             tracksListAdapter.notifyItemRangeChanged(0, it.size-1)
             tracksListAdapter.selectLastItem()
         }
+        tracksListAdapter.selectLastItem()
     }
 }

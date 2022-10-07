@@ -73,6 +73,10 @@ class TrackListRecyclerAdapter (
     }
 
     fun selectLastItem() {
-        selectedItem.postValue(tracks.value?.last() ?: TrackDomainModel())
+        val size = tracks.value?.size ?: 0
+        if(size > 0 ) {
+            selectedItem.postValue(tracks.value?.last() ?: TrackDomainModel())
+            selectedPosition = size - 1
+        }
     }
 }
