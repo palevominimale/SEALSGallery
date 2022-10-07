@@ -36,9 +36,11 @@ class LocationService : Service() {
     private val ref = db.getReference(refName).child(auth.currentUser?.uid.toString()).child(now.toString())
     private val track = TrackDomainModel()
     private var id = 0
+    private var interval = context.getSharedPreferences(
+        context.getString(R.string.tracker_location_interval_name),
+        MODE_PRIVATE).toString()
 
     companion object {
-        private const val INTERVAL = 5000L
         private const val MIN_INTERVAL = 3000L
         private const val TAG = "RECORD_SERVICE"
     }
@@ -99,7 +101,7 @@ class LocationService : Service() {
         ref.child(track.startTime.toString())
         ref.setValue(track)
         val locationRequest = LocationRequest.create().apply {
-            interval = INTERVAL
+            interval = this@LocationService.interval.toLongOrNull() ?: 3L
             fastestInterval = MIN_INTERVAL
             priority = Priority.PRIORITY_HIGH_ACCURACY
         }

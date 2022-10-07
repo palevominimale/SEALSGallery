@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.settings.SettingsFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/settingsFragmentContainer"
+        android:name="app.seals.sealsgallery.ui.settings.SettingsFragmentInner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>

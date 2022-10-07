@@ -1,0 +1,17 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/tracker_settings">
+
+        <SeekBarPreference
+            app:key="requestInterval"
+            app:title="@string/tracker_location_interval"
+            app:min="3"
+            app:showSeekBarValue="true"
+            app:defaultValue="3"
+            android:max="60"
+            />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

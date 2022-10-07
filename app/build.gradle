@@ -39,6 +39,8 @@ android {
 
 dependencies {
 
+    implementation 'androidx.preference:preference:1.2.0'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
     def koin= '3.2.0'
     def coroutines = "1.6.4"
     def room = '2.4.3'
