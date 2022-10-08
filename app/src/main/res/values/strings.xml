@@ -45,4 +45,12 @@
     <string name="firebase_reference_user_data_name">name</string>
     <string name="firebase_reference_user_data_last_login">lastLogin</string>
     <string name="firebase_reference_user_data_photo_link">photoLink</string>
+    <string name="personal_settings">Personal settings</string>
+    <string name="personal_user_name">Visible name</string>
+    <string name="personal_user_name_key">visibleName</string>
+    <string name="personal_user_country_key">country</string>
+    <string name="personal_user_country">Your country</string>
+    <string name="personal_user_language_key">lang</string>
+    <string name="personal_user_language">Language</string>
+    <string name="user_last_online">Last seen today at 12:22</string>
 </resources>

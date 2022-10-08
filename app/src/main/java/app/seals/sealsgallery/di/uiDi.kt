@@ -24,7 +24,9 @@ val uiDi = module {
     }
 
     viewModel {
-        MainActivityViewModel()
+        MainActivityViewModel(
+            userRepository = get()
+        )
     }
 
     viewModel {

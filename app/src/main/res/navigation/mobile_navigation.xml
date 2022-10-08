@@ -15,7 +15,7 @@
         android:id="@+id/nav_feed"
         android:name="app.seals.sealsgallery.ui.feed.FeedFragment"
         android:label="@string/menu_feed"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_feed" />
 
     <fragment
         android:id="@+id/nav_record"

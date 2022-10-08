@@ -1,6 +1,27 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory app:title="@string/personal_settings">
+
+        <EditTextPreference
+            app:key = "@string/personal_user_name_key"
+            app:summary="@string/personal_user_name"
+            app:defaultValue="Default Name"
+            />
+        <EditTextPreference
+            app:key = "@string/personal_user_country_key"
+            app:summary="@string/personal_user_country"
+            app:defaultValue="France"
+            />
+        <EditTextPreference
+            app:key = "@string/personal_user_language_key"
+            app:summary="@string/personal_user_language"
+            android:defaultValue="English"
+            app:defaultValue="Default Name"
+            />
+
+    </PreferenceCategory>
+
     <PreferenceCategory app:title="@string/tracker_settings">
 
         <SeekBarPreference

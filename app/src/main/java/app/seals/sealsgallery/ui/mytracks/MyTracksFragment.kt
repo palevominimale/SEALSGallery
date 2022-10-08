@@ -37,7 +37,7 @@ class MyTracksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val tracksListSwipe = view.rootView.findViewById<SwipeRefreshLayout>(R.id.swipeRefresh)
+        val tracksListSwipe = view.rootView.findViewById<SwipeRefreshLayout>(R.id.tracksSwipeRefresh)
         val tracksListRecycler = view.rootView.findViewById<RecyclerView>(R.id.tracksListRecycler)
         val tracksListAdapter = TrackListRecyclerAdapter(vm.tracks, requireContext())
         map = view.rootView.findViewById(R.id.tracksMapView)

@@ -21,6 +21,7 @@ import androidx.navigation.ui.setupWithNavController
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.databinding.ActivityMainBinding
 import app.seals.sealsgallery.domain.bootstrap.CheckPermissions
+import app.seals.sealsgallery.domain.models.UserDomainModel
 import app.seals.sealsgallery.location.LocationService
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -33,6 +34,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @SuppressLint("UnspecifiedImmutableFlag")
 class MainActivity: AppCompatActivity() {
@@ -44,6 +46,7 @@ class MainActivity: AppCompatActivity() {
     private lateinit var gso: GoogleSignInOptions
     private lateinit var googleSignInClient: GoogleSignInClient
 
+    private val vm : MainActivityViewModel by viewModel()
     private var recordIsActive = false
     private val checkPermissions = CheckPermissions(this, this)
     private var auth = FirebaseAuth.getInstance()
@@ -68,6 +71,11 @@ class MainActivity: AppCompatActivity() {
                     .addOnCompleteListener(this) { signInTask ->
                         if (signInTask.isSuccessful) {
                             signedIn()
+                            vm.setUser(UserDomainModel(
+                                uid = account.id ?: "null",
+                                name = account.displayName ?: "null",
+                                photoLink = account.photoUrl.toString()
+                            ))
                             val i = Intent()
                             i.action = getString(R.string.logged_in_intent)
                             val pi = PendingIntent.getBroadcast(
