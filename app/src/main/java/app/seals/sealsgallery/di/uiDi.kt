@@ -14,7 +14,8 @@ val uiDi = module {
     viewModel {
         FeedViewModel(
             drawTrack = get(),
-            updateBounds = get()
+            updateBounds = get(),
+            context = androidContext()
         )
     }
 
@@ -28,7 +29,8 @@ val uiDi = module {
 
     viewModel {
         MainActivityViewModel(
-            userRepository = get()
+            userRepository = get(),
+            context = androidContext()
         )
     }
 

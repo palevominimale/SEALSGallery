@@ -43,7 +43,7 @@ class FeedFragment : Fragment() {
         }
 
         feedSwipe.setOnRefreshListener {
-            vm.generateFeed()
+            vm.loadFeedFromFirebase()
             feedSwipe.isRefreshing = false
         }
 

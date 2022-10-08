@@ -3,6 +3,7 @@ package app.seals.sealsgallery.data.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "User")
 data class UserDataModel(
@@ -21,4 +22,4 @@ data class UserDataModel(
     @ColumnInfo(name = "maxRange")              var maxRange: Int = 0,
     @ColumnInfo(name = "avgRange")              var avgRange: Int = 0,
     @ColumnInfo(name = "totalTime")             var totalTime: Int = 0
-)
+) : Serializable

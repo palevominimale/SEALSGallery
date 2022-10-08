@@ -58,17 +58,11 @@ class FeedRecyclerAdapter(
             holder.lastOnline.text = material.user.lastLogin.toString()
             holder.trackTime.text = "${t1.format(formatter)} - ${t2.format(formatter)}"
             holder.trackCity.text = "city 17"
-//            holder.trackCity.text = "${
-//                Geocoder(context).getFromLocation(
-//                    track.trackPoints[0].latitude,
-//                    track.trackPoints[0].longitude,
-//                    1)[0]
-//                    .locality} - ${
-//                Geocoder(context).getFromLocation(
-//                    track.trackPoints[track.trackPoints.size-1].latitude,
-//                    track.trackPoints[track.trackPoints.size-1].longitude,
-//                    1)[0]
-//                    .locality}"
+//            holder.trackCity.text = Geocoder(context).getFromLocation(
+//                track.trackPoints[0].latitude,
+//                track.trackPoints[0].longitude,
+//                1)[0]
+//                .locality
             holder.itemMap.onCreate(savedInstanceState)
             holder.itemMap.onResume()
             MapsInitializer.initialize(context)

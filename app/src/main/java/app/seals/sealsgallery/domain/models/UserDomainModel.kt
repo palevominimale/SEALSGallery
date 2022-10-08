@@ -1,5 +1,7 @@
 package app.seals.sealsgallery.domain.models
 
+import java.io.Serializable
+
 data class UserDomainModel(
     var uid: String = "",
     var name: String = "",
@@ -16,4 +18,4 @@ data class UserDomainModel(
     var maxRange: Int = 0,
     var avgRange: Int = 0,
     var totalTime: Int = 0
-)
+) : Serializable

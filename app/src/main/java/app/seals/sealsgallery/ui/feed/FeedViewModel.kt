@@ -1,22 +1,34 @@
 package app.seals.sealsgallery.ui.feed
 
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import app.seals.sealsgallery.R
 import app.seals.sealsgallery.domain.map_tools.DrawTrack
 import app.seals.sealsgallery.domain.map_tools.UpdateBounds
 import app.seals.sealsgallery.domain.models.PostDomainModel
 import app.seals.sealsgallery.domain.models.TrackDomainModel
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class FeedViewModel(
-
+    context: Context,
     private val drawTrack: DrawTrack,
     private val updateBounds: UpdateBounds,
 ) : ViewModel() {
 
     val feed = MutableLiveData<List<PostDomainModel>>()
-    val feedList = mutableListOf<PostDomainModel>()
+    private val feedList = mutableListOf<PostDomainModel>()
+    private val refMainNode = context.getString(R.string.firebase_reference_name)
+    private val refTracksNode = context.getString(R.string.firebase_reference_tracks_name)
+    private val db = FirebaseDatabase.getInstance()
+    private val auth = FirebaseAuth.getInstance()
+    private val uid = auth.currentUser?.uid.toString()
+    private val ref = db.getReference(refMainNode)
+//        .child(uid).child(refTracksNode)
 
     fun drawTrack(track: TrackDomainModel) : PolylineOptions {
         return drawTrack.invoke(track)
@@ -26,12 +38,18 @@ class FeedViewModel(
         return updateBounds.invoke(track)
     }
 
-    fun loadFeed() {
-
+    fun loadFeedFromFirebase() {
+        ref.get().addOnCompleteListener { snapshot ->
+            feedList.clear()
+            snapshot.result.children.forEach { children ->
+                Log.e("FVM_", "$children")
+            }
+        }
     }
 
     fun generateFeed() {
-        repeat(10) {
+        feedList.clear()
+        repeat(5) {
             feedList.add(PostDomainModel())
         }
         feed.postValue(feedList)
