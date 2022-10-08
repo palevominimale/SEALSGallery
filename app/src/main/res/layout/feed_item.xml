@@ -27,7 +27,7 @@
         android:text="@string/personal_user_name"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/userItemAvatar"
-        app:layout_constraintTop_toTopOf="@+id/userItemAvatar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/userItemLastOnline"
@@ -35,9 +35,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/user_last_online"
-        android:textSize="14sp"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/userItemAvatar"
-        app:layout_constraintEnd_toStartOf="@+id/userItemAvatar" />
+        app:layout_constraintEnd_toStartOf="@+id/userItemAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/userItemName" />
 
     <TextView
         android:id="@+id/feedItemCity"
@@ -45,26 +46,35 @@
         android:layout_height="wrap_content"
         android:text="@string/tracks_city"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/userItemAvatar" />
+        app:layout_constraintTop_toTopOf="@+id/userItemName" />
 
     <TextView
         android:id="@+id/userTrackTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/track_item_time"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/userItemAvatar"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feedItemCity" />
 
-    <com.google.android.gms.maps.MapView
-        android:clickable="false"
-        android:focusable="false"
-        android:id="@+id/userItemMapView"
+    <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userItemAvatar" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintTop_toBottomOf="@id/userItemAvatar">
+
+        <com.google.android.gms.maps.MapView
+            android:clickable="false"
+            android:focusable="false"
+            android:id="@+id/userItemMapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,6 @@ package app.seals.sealsgallery.ui.feed.adapters
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -89,7 +88,7 @@ class FeedRecyclerAdapter(
                 }
             }
             holder.userName.text = material.user.name
-            holder.lastOnline.text = lastOnlineTime.format(formatterLastOnline)
+            holder.lastOnline.text = "Last seen ${lastOnlineTime.format(formatterLastOnline)}"
             holder.trackTime.text = "${t1.format(formatter)} - ${t2.format(formatter)}"
             holder.trackCity.text = Geocoder(context).getFromLocation(
                 track.trackPoints[0].latitude,
