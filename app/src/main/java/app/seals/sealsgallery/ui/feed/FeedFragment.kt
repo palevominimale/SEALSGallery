@@ -31,7 +31,7 @@ class FeedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val feedSwipe = view.rootView.findViewById<SwipeRefreshLayout>(R.id.feedSwipeRefresh)
         val feedRecycler = view.rootView.findViewById<RecyclerView>(R.id.feedRecycler)
-        val feedAdapter = FeedRecyclerAdapter(vm.feed, requireContext(), savedInstanceState, vm)
+        val feedAdapter = FeedRecyclerAdapter(vm.feed, requireContext(), savedInstanceState, vm, requireActivity())
         feedRecycler.adapter = feedAdapter
         feedRecycler.layoutManager = LinearLayoutManager(requireContext()).apply {
             reverseLayout = true

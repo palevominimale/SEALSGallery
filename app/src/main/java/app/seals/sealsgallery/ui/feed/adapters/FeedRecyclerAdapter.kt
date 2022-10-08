@@ -1,13 +1,17 @@
 package app.seals.sealsgallery.ui.feed.adapters
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.graphics.drawable.RoundedBitmapDrawable
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import app.seals.sealsgallery.R
@@ -16,6 +20,10 @@ import app.seals.sealsgallery.domain.models.PostDomainModel
 import app.seals.sealsgallery.ui.feed.FeedViewModel
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 import java.time.Instant
 import java.time.ZoneId
@@ -26,7 +34,8 @@ class FeedRecyclerAdapter(
     private val feed: MutableLiveData<List<PostDomainModel>>,
     private val context: Context,
     private val savedInstanceState: Bundle?,
-    private val vm: FeedViewModel
+    private val vm: FeedViewModel,
+    private val activity: Activity
 ) : RecyclerView.Adapter<FeedRecyclerAdapter.ViewHolder>() {
 
     private val setStartEndMarkers : SetStartEndMarkers by inject(SetStartEndMarkers::class.java)
@@ -35,7 +44,7 @@ class FeedRecyclerAdapter(
         val userName: TextView = item.findViewById(R.id.userItemName)
         val lastOnline: TextView = item.findViewById(R.id.userItemLastOnline)
         val trackTime: TextView = item.findViewById(R.id.userTrackTime)
-//        val userAvatar: ImageView = item.findViewById(R.id.userItemAvatar)
+        val userAvatar: ImageView = item.findViewById(R.id.userItemAvatar)
         val trackCity: TextView = item.findViewById(R.id.feedItemCity)
         val itemMap: MapView = item.findViewById(R.id.userItemMapView)
     }
@@ -57,6 +66,19 @@ class FeedRecyclerAdapter(
             val formatterLastOnline = DateTimeFormatter.ofPattern("dd/MM HH:mm")
             val lastOnlineTime = Instant.ofEpochSecond(material.user.lastLogin)
                 .atZone(ZoneId.systemDefault())
+            var userPhoto : RoundedBitmapDrawable? = null
+            CoroutineScope(Dispatchers.IO).launch {
+                val bitmap = kotlin.runCatching {
+                    Picasso.get().load(material.user.photoLink).get()
+                }
+                userPhoto = RoundedBitmapDrawableFactory.create(context.resources, bitmap.getOrNull()).apply {
+                    isCircular = true
+                }
+            }.invokeOnCompletion {
+                activity.runOnUiThread {
+                    holder.userAvatar.setImageDrawable(userPhoto)
+                }
+            }
             holder.userName.text = material.user.name
             holder.lastOnline.text = lastOnlineTime.format(formatterLastOnline)
             holder.trackTime.text = "${t1.format(formatter)} - ${t2.format(formatter)}"

@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/personal_user_name"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/userItemAvatar"
         app:layout_constraintTop_toTopOf="@+id/userItemAvatar" />
 
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/user_last_online"
-        android:textSize="12sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/userItemAvatar"
         app:layout_constraintEnd_toStartOf="@+id/userItemAvatar"
         app:layout_constraintTop_toBottomOf="@+id/userItemName"
@@ -60,6 +60,7 @@
 
     <com.google.android.gms.maps.MapView
         android:clickable="false"
+        android:focusable="false"
         android:id="@+id/userItemMapView"
         android:layout_width="0dp"
         android:layout_height="0dp"

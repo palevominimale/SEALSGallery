@@ -170,7 +170,7 @@ class MainActivity: AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val bitmap = kotlin.runCatching { Picasso.get().load(auth.currentUser?.photoUrl).get() }
             drawable = RoundedBitmapDrawableFactory.create(resources, bitmap.getOrNull()).apply {
-                cornerRadius = 50f
+                isCircular = true
             }
         }.invokeOnCompletion {
             runOnUiThread {
