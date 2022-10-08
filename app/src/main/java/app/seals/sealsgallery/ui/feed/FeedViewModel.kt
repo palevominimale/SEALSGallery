@@ -1,7 +1,6 @@
 package app.seals.sealsgallery.ui.feed
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.seals.sealsgallery.R
@@ -12,7 +11,6 @@ import app.seals.sealsgallery.domain.models.TrackDomainModel
 import app.seals.sealsgallery.domain.models.UserDomainModel
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.model.PolylineOptions
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
 class FeedViewModel(
@@ -27,8 +25,6 @@ class FeedViewModel(
     private val refTracksNode = context.getString(R.string.firebase_reference_tracks_name)
     private val refUserDataNode = context.getString(R.string.firebase_reference_user_data)
     private val db = FirebaseDatabase.getInstance()
-    private val auth = FirebaseAuth.getInstance()
-    private val uid = auth.currentUser?.uid.toString()
     private val ref = db.getReference(refMainNode)
 
     fun drawTrack(track: TrackDomainModel) : PolylineOptions {
@@ -52,20 +48,11 @@ class FeedViewModel(
                                 )
                             )
                 }
-                Log.e("FVM_", "${user?.name} ${user?.uid}")
             }
             feedList.sortByDescending {
                 it.track.startTime
             }
             feed.postValue(feedList)
         }
-    }
-
-    fun generateFeed() {
-        feedList.clear()
-        repeat(5) {
-            feedList.add(PostDomainModel())
-        }
-        feed.postValue(feedList)
     }
 }

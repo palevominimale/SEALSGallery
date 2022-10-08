@@ -71,12 +71,19 @@ class FeedRecyclerAdapter(
                 val bitmap = kotlin.runCatching {
                     Picasso.get().load(material.user.photoLink).get()
                 }
-                userPhoto = RoundedBitmapDrawableFactory.create(context.resources, bitmap.getOrNull()).apply {
-                    isCircular = true
+                val bitmapGet = bitmap.getOrNull()
+                if(bitmapGet != null) {
+                    userPhoto =
+                        RoundedBitmapDrawableFactory.create(context.resources, bitmap.getOrNull())
+                            .apply {
+                                isCircular = true
+                            }
                 }
             }.invokeOnCompletion {
                 activity.runOnUiThread {
-                    holder.userAvatar.setImageDrawable(userPhoto)
+                    if (userPhoto != null) {
+                        holder.userAvatar.setImageDrawable(userPhoto)
+                    }
                 }
             }
             holder.userName.text = material.user.name
