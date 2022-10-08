@@ -3,6 +3,7 @@ package app.seals.sealsgallery.ui.feed.adapters
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -72,24 +73,25 @@ class FeedRecyclerAdapter(
                     Picasso.get().load(material.user.photoLink).get()
                 }
                 val bitmapGet = bitmap.getOrNull()
-                if(bitmapGet != null) {
-                    userPhoto =
-                        RoundedBitmapDrawableFactory.create(context.resources, bitmap.getOrNull())
-                            .apply {
-                                isCircular = true
-                            }
+                userPhoto = if(bitmapGet != null) {
+                    RoundedBitmapDrawableFactory.create(context.resources, bitmap.getOrNull())
+                        .apply {
+                            isCircular = true
+                        }
+                } else {
+                    val b = BitmapFactory.decodeResource(context.resources, R.drawable.no_accounts_48px)
+                    RoundedBitmapDrawableFactory.create(context.resources, b).apply {
+                        isCircular = true
+                    }
                 }
             }.invokeOnCompletion {
                 activity.runOnUiThread {
-                    if (userPhoto != null) {
-                        holder.userAvatar.setImageDrawable(userPhoto)
-                    }
+                    holder.userAvatar.setImageDrawable(userPhoto)
                 }
             }
             holder.userName.text = material.user.name
             holder.lastOnline.text = lastOnlineTime.format(formatterLastOnline)
             holder.trackTime.text = "${t1.format(formatter)} - ${t2.format(formatter)}"
-            holder.trackCity.text = "city 17"
             holder.trackCity.text = Geocoder(context).getFromLocation(
                 track.trackPoints[0].latitude,
                 track.trackPoints[0].longitude,
