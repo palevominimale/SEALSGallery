@@ -9,6 +9,7 @@ import app.seals.sealsgallery.domain.map_tools.DrawTrack
 import app.seals.sealsgallery.domain.map_tools.UpdateBounds
 import app.seals.sealsgallery.domain.models.PostDomainModel
 import app.seals.sealsgallery.domain.models.TrackDomainModel
+import app.seals.sealsgallery.domain.models.UserDomainModel
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -42,8 +43,21 @@ class FeedViewModel(
         ref.get().addOnCompleteListener { snapshot ->
             feedList.clear()
             snapshot.result.children.forEach { children ->
-                Log.e("FVM_", "$children")
+                val user = children.child("name").getValue(UserDomainModel::class.java)
+                children.child("tracks").children.forEach {
+                    feedList.add(
+                            PostDomainModel(
+                                user = user ?: UserDomainModel(),
+                                track = it.getValue(TrackDomainModel::class.java) ?: TrackDomainModel()
+                                )
+                            )
+                }
+                Log.e("FVM_", "${user?.name} ${user?.uid}")
             }
+            feedList.sortByDescending {
+                it.track.startTime
+            }
+            feed.postValue(feedList)
         }
     }
 

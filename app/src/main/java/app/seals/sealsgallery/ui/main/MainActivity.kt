@@ -35,6 +35,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.time.Instant
 
 @SuppressLint("UnspecifiedImmutableFlag")
 class MainActivity: AppCompatActivity() {
@@ -45,6 +46,7 @@ class MainActivity: AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var gso: GoogleSignInOptions
     private lateinit var googleSignInClient: GoogleSignInClient
+    private var lastActivation: Long = 0L
 
     private val vm : MainActivityViewModel by viewModel()
     private var recordIsActive = false
@@ -74,7 +76,8 @@ class MainActivity: AppCompatActivity() {
                             vm.setUser(UserDomainModel(
                                 uid = account.id ?: "null",
                                 name = account.displayName ?: "null",
-                                photoLink = account.photoUrl.toString()
+                                photoLink = account.photoUrl.toString(),
+                                lastLogin = lastActivation
                             ))
                             val i = Intent()
                             i.action = getString(R.string.logged_in_intent)
@@ -95,6 +98,7 @@ class MainActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         checkPermissions.invoke()
+        lastActivation = Instant.now().epochSecond
         binding = ActivityMainBinding.inflate(layoutInflater)
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -111,6 +115,7 @@ class MainActivity: AppCompatActivity() {
         setupFab()
         if (auth.currentUser != null) {
             signedIn()
+            vm.setLastActivation(lastActivation)
         }
     }
 

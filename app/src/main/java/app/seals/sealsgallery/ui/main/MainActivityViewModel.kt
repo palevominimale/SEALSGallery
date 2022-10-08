@@ -29,4 +29,8 @@ class MainActivityViewModel(
         ref.setValue(user)
     }
 
+    fun setLastActivation(time: Long) {
+        ref.child("lastLogin").setValue(time)
+    }
+
 }

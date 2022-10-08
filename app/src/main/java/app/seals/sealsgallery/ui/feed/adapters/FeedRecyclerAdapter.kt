@@ -53,16 +53,19 @@ class FeedRecyclerAdapter(
                 .atZone(ZoneId.systemDefault())
             val t2 = Instant.ofEpochSecond(track.endTime/1000)
                 .atZone(ZoneId.systemDefault())
-            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+            val formatter = DateTimeFormatter.ofPattern("dd/MM HH:mm")
+            val formatterLastOnline = DateTimeFormatter.ofPattern("dd/MM HH:mm")
+            val lastOnlineTime = Instant.ofEpochSecond(material.user.lastLogin)
+                .atZone(ZoneId.systemDefault())
             holder.userName.text = material.user.name
-            holder.lastOnline.text = material.user.lastLogin.toString()
+            holder.lastOnline.text = lastOnlineTime.format(formatterLastOnline)
             holder.trackTime.text = "${t1.format(formatter)} - ${t2.format(formatter)}"
             holder.trackCity.text = "city 17"
-//            holder.trackCity.text = Geocoder(context).getFromLocation(
-//                track.trackPoints[0].latitude,
-//                track.trackPoints[0].longitude,
-//                1)[0]
-//                .locality
+            holder.trackCity.text = Geocoder(context).getFromLocation(
+                track.trackPoints[0].latitude,
+                track.trackPoints[0].longitude,
+                1)[0]
+                .locality
             holder.itemMap.onCreate(savedInstanceState)
             holder.itemMap.onResume()
             MapsInitializer.initialize(context)
