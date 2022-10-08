@@ -74,19 +74,18 @@ class FeedRecyclerAdapter(
                 }
                 val bitmapGet = bitmap.getOrNull()
                 userPhoto = if(bitmapGet != null) {
-                    RoundedBitmapDrawableFactory.create(context.resources, bitmap.getOrNull())
+                    RoundedBitmapDrawableFactory.create(context.resources, bitmapGet)
                         .apply {
                             isCircular = true
                         }
-                } else {
-                    val b = BitmapFactory.decodeResource(context.resources, R.drawable.no_accounts_48px)
-                    RoundedBitmapDrawableFactory.create(context.resources, b).apply {
-                        isCircular = true
-                    }
-                }
+                } else null
             }.invokeOnCompletion {
                 activity.runOnUiThread {
-                    holder.userAvatar.setImageDrawable(userPhoto)
+                    if (userPhoto != null) {
+                        holder.userAvatar.setImageDrawable(userPhoto)
+                    } else {
+                        holder.userAvatar.setImageResource(R.drawable.ic_baseline_person_24)
+                    }
                 }
             }
             holder.userName.text = material.user.name
