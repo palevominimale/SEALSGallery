@@ -12,7 +12,10 @@ import org.koin.dsl.module
 
 val uiDi = module {
     viewModel {
-        FeedViewModel()
+        FeedViewModel(
+            drawTrack = get(),
+            updateBounds = get()
+        )
     }
 
     viewModel {
