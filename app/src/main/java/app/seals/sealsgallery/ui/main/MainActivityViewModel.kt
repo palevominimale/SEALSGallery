@@ -14,7 +14,7 @@ class MainActivityViewModel(
 ) : ViewModel() {
 
     private val refMainNode = context.getString(R.string.firebase_reference_name)
-    private val refUserDataNode = context.getString(R.string.firebase_reference_user_data_name)
+    private val refUserDataNode = context.getString(R.string.firebase_reference_user_data)
     private val db = FirebaseDatabase.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private val uid = auth.currentUser?.uid.toString()

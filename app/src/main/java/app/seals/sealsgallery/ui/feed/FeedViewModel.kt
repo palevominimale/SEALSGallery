@@ -25,11 +25,11 @@ class FeedViewModel(
     private val feedList = mutableListOf<PostDomainModel>()
     private val refMainNode = context.getString(R.string.firebase_reference_name)
     private val refTracksNode = context.getString(R.string.firebase_reference_tracks_name)
+    private val refUserDataNode = context.getString(R.string.firebase_reference_user_data)
     private val db = FirebaseDatabase.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private val uid = auth.currentUser?.uid.toString()
     private val ref = db.getReference(refMainNode)
-//        .child(uid).child(refTracksNode)
 
     fun drawTrack(track: TrackDomainModel) : PolylineOptions {
         return drawTrack.invoke(track)
@@ -43,8 +43,8 @@ class FeedViewModel(
         ref.get().addOnCompleteListener { snapshot ->
             feedList.clear()
             snapshot.result.children.forEach { children ->
-                val user = children.child("name").getValue(UserDomainModel::class.java)
-                children.child("tracks").children.forEach {
+                val user = children.child(refUserDataNode).getValue(UserDomainModel::class.java)
+                children.child(refTracksNode).children.forEach {
                     feedList.add(
                             PostDomainModel(
                                 user = user ?: UserDomainModel(),
