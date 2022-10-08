@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.ui.feed.adapters.FeedRecyclerAdapter
-import app.seals.sealsgallery.ui.mytracks.adapters.TrackListRecyclerAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FeedFragment : Fragment() {
@@ -33,10 +32,7 @@ class FeedFragment : Fragment() {
         val feedRecycler = view.rootView.findViewById<RecyclerView>(R.id.feedRecycler)
         val feedAdapter = FeedRecyclerAdapter(vm.feed, requireContext(), savedInstanceState, vm, requireActivity())
         feedRecycler.adapter = feedAdapter
-        feedRecycler.layoutManager = LinearLayoutManager(requireContext()).apply {
-            reverseLayout = true
-            stackFromEnd = true
-        }
+        feedRecycler.layoutManager = LinearLayoutManager(requireContext())
 
         vm.feed.observe(viewLifecycleOwner) {
             feedRecycler.adapter?.notifyDataSetChanged()
@@ -47,5 +43,6 @@ class FeedFragment : Fragment() {
             feedSwipe.isRefreshing = false
         }
 
+        vm.loadFeedFromFirebase()
     }
 }

@@ -1,8 +1,10 @@
 package app.seals.sealsgallery.ui.mytracks.adapters
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.location.Geocoder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +24,7 @@ class TrackListRecyclerAdapter (
 ) : RecyclerView.Adapter<TrackListRecyclerAdapter.ViewHolder>() {
 
     val selectedItem = MutableLiveData<TrackDomainModel>()
+    val removeItem = MutableLiveData(Pair(-1L, -1))
     private var selectedPosition = RecyclerView.NO_POSITION
 
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
@@ -68,6 +71,21 @@ class TrackListRecyclerAdapter (
                 notifyItemChanged(selectedPosition)
                 selectedPosition = holder.adapterPosition
                 notifyItemChanged(selectedPosition)
+            }
+
+            holder.itemView.setOnLongClickListener {
+                Log.e("TLRA_", material.startTime.toString())
+                val builder = AlertDialog.Builder(context).apply {
+                    setTitle("Remove?")
+                    setMessage("Are you sure?")
+                    setPositiveButton("Yes") { _, _ ->
+                        removeItem.postValue(Pair(material.startTime, position))
+                    }
+                    setNegativeButton("No") { _, _ ->
+                    }
+                }
+                builder.show()
+                false
             }
         }
     }

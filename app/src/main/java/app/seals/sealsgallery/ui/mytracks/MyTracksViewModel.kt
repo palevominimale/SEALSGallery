@@ -131,4 +131,21 @@ class MyTracksViewModel (
         return camera
     }
 
+    fun removeItem(id: Pair<Long, Int>) {
+        Log.e("MTVM_", "Removing $id")
+        ref.get().addOnCompleteListener {
+            it.result.children.forEach { snapshot ->
+                val stTime = snapshot.getValue(TrackDomainModel::class.java)
+                Log.e("MTVM_", "Removing $snapshot (${id.first})")
+                if((stTime?.startTime ?: 0L) == id.first) {
+                    Log.e("MTVM_", "Removing by key ${snapshot.key}")
+                    ref.child(snapshot.key.toString()).removeValue()
+                }
+            }
+        }
+        ref.child(id.first.toString()).removeValue()
+        tracksList.removeAt(id.second)
+        tracks.postValue(tracksList)
+    }
+
 }

@@ -1,5 +1,6 @@
 package app.seals.sealsgallery.ui.mytracks
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -35,6 +36,7 @@ class MyTracksFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_my_tracks, container, false)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val tracksListSwipe = view.rootView.findViewById<SwipeRefreshLayout>(R.id.tracksSwipeRefresh)
@@ -88,6 +90,12 @@ class MyTracksFragment : Fragment() {
         vm.tracks.observe(viewLifecycleOwner) {
             tracksListAdapter.notifyItemRangeChanged(0, it.size-1)
             tracksListAdapter.selectLastItem()
+        }
+        tracksListAdapter.removeItem.observe(viewLifecycleOwner) { item ->
+            if(item.first > -1 && item.second > -1) {
+                vm.removeItem(item)
+                tracksListAdapter.notifyDataSetChanged()
+            }
         }
         tracksListAdapter.selectLastItem()
     }

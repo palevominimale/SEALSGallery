@@ -41,12 +41,10 @@ class FeedViewModel(
             snapshot.result.children.forEach { children ->
                 val user = children.child(refUserDataNode).getValue(UserDomainModel::class.java)
                 children.child(refTracksNode).children.forEach {
-                    feedList.add(
-                            PostDomainModel(
-                                user = user ?: UserDomainModel(),
-                                track = it.getValue(TrackDomainModel::class.java) ?: TrackDomainModel()
-                                )
-                            )
+                    feedList.add(PostDomainModel(
+                        user = user ?: UserDomainModel(),
+                        track = it.getValue(TrackDomainModel::class.java) ?: TrackDomainModel()
+                        ))
                 }
             }
             feedList.sortByDescending {
