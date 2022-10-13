@@ -15,7 +15,8 @@ val uiDi = module {
         FeedViewModel(
             drawTrack = get(),
             updateBounds = get(),
-            context = androidContext()
+            context = androidContext(),
+            feedRepository = get()
         )
     }
 

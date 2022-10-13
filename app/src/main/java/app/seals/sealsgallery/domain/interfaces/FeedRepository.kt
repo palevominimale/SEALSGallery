@@ -16,5 +16,7 @@ interface FeedRepository : FeedRepositoryDAO {
 
     fun addPost(post: PostDomainModel)
 
+    fun addAll(feed: List<PostDomainModel>)
+
     override fun clear()
 }

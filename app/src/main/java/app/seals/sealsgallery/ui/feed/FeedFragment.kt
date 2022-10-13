@@ -42,7 +42,6 @@ class FeedFragment : Fragment() {
             vm.loadFeedFromFirebase()
             feedSwipe.isRefreshing = false
         }
-
-        vm.loadFeedFromFirebase()
+        vm.loadFeed()
     }
 }

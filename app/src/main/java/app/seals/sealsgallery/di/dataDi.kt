@@ -1,7 +1,7 @@
 package app.seals.sealsgallery.di
 
 import app.seals.sealsgallery.data.repos.TracksRepositoryImpl
-import app.seals.sealsgallery.data.repos.UserRepositoryImpl
+import app.seals.sealsgallery.data.repos.FeedRepositoryImpl
 import app.seals.sealsgallery.domain.interfaces.TrackRepository
 import app.seals.sealsgallery.domain.interfaces.FeedRepository
 import org.koin.android.ext.koin.androidContext
@@ -15,7 +15,7 @@ val dataDi = module {
     }
 
     single <FeedRepository>{
-        UserRepositoryImpl(
+        FeedRepositoryImpl(
             context = androidContext()
         )
     }

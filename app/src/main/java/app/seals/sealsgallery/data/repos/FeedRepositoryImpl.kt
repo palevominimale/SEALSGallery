@@ -7,7 +7,7 @@ import app.seals.sealsgallery.data.room.feed.FeedRoomDB
 import app.seals.sealsgallery.domain.interfaces.FeedRepository
 import app.seals.sealsgallery.domain.models.PostDomainModel
 
-class UserRepositoryImpl (context: Context): FeedRepository {
+class FeedRepositoryImpl (context: Context): FeedRepository {
 
     private val db: FeedRepositoryDAO = FeedRoomDB.getInstance(context)?.dao()!!
 
@@ -25,6 +25,12 @@ class UserRepositoryImpl (context: Context): FeedRepository {
 
     override fun addPost(post: PostDomainModel) {
         db.addPost(post.mapToDomain())
+    }
+
+    override fun addAll(feed: List<PostDomainModel>) {
+        feed.forEach { post ->
+            db.addPost(post.mapToDomain())
+        }
     }
 
     override fun clear() {
