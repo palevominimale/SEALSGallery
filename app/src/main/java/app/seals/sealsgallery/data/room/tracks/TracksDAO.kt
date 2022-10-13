@@ -1,4 +1,4 @@
-package app.seals.sealsgallery.data.room
+package app.seals.sealsgallery.data.room.tracks
 
 import androidx.room.*
 import app.seals.sealsgallery.data.models.TrackDataModel

@@ -1,7 +1,7 @@
 package app.seals.sealsgallery.domain.interfaces
 
 import app.seals.sealsgallery.data.models.TrackDataModel
-import app.seals.sealsgallery.data.room.TrackRepositoryDAO
+import app.seals.sealsgallery.data.room.tracks.TrackRepositoryDAO
 import app.seals.sealsgallery.domain.models.TrackDomainModel
 
 interface TrackRepository : TrackRepositoryDAO {

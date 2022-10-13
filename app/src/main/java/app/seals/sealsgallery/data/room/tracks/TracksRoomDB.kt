@@ -1,4 +1,4 @@
-package app.seals.sealsgallery.data.room
+package app.seals.sealsgallery.data.room.tracks
 
 import android.content.Context
 import androidx.room.Database
@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import app.seals.sealsgallery.data.models.TrackDataModel
+import app.seals.sealsgallery.data.room.Converters
 
 
 @Database(entities = [TrackDataModel::class], version = 1, exportSchema = false)
