@@ -80,7 +80,6 @@ class LocationService : Service() {
                 super.onLocationResult(locationResult)
             }
         }
-        db.setPersistenceEnabled(true)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

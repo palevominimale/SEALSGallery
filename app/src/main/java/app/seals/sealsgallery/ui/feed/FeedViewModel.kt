@@ -43,6 +43,9 @@ class FeedViewModel(
     fun loadFeed() {
         feedList.clear()
         feedList.addAll(feedRepository.getAllDomain() ?: listOf())
+        feedList.sortByDescending {
+            it.track.startTime
+        }
         feed.postValue(feedList)
     }
 

@@ -18,6 +18,10 @@ class MainActivityViewModel(
     private val uid = auth.currentUser?.uid.toString()
     private val ref = db.getReference(refMainNode).child(uid).child(refUserDataNode)
 
+    fun setFirebasePersistence() {
+        db.setPersistenceEnabled(true)
+    }
+
     fun setUser(user: UserDomainModel) {
         ref.setValue(user)
     }
