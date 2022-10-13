@@ -19,5 +19,6 @@ Used technologies and patterns:
 - Kotlin Extension functions (mappers)
 - Foreground service
 - Notifications
+- Fused location provider
 <br>
 <img src="https://github.com/palevominimale/SEALSGallery/blob/master/screen (8).jpg" width=300> <img src="https://github.com/palevominimale/SEALSGallery/blob/master/screen (7).jpg" width=300> <img src="https://github.com/palevominimale/SEALSGallery/blob/master/screen (6).jpg" width=300> <img src="https://github.com/palevominimale/SEALSGallery/blob/master/screen (4).jpg" width=300> <img src="https://github.com/palevominimale/SEALSGallery/blob/master/screen (1).jpg" width=300> <img src="https://github.com/palevominimale/SEALSGallery/blob/master/screen (2).jpg" width=300> <img src="https://github.com/palevominimale/SEALSGallery/blob/master/screen (3).jpg" width=300>
