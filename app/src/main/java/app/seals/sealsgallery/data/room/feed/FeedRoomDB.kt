@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import app.seals.sealsgallery.data.models.PostDataModel
 import app.seals.sealsgallery.data.models.UserDataModel
 import app.seals.sealsgallery.data.room.Converters
 
-@Database(entities = [UserDataModel::class], version = 1, exportSchema = false)
+@Database(entities = [PostDataModel::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class FeedRoomDB: RoomDatabase() {
 

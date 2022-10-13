@@ -29,7 +29,6 @@ val uiDi = module {
 
     viewModel {
         MainActivityViewModel(
-            userRepository = get(),
             context = androidContext()
         )
     }

@@ -7,12 +7,12 @@ import app.seals.sealsgallery.data.models.UserDataModel
 @Dao
 interface FeedRepositoryDAO {
 
-    @Query("SELECT * FROM User")
+    @Query("SELECT * FROM Feed")
     fun getAll() : List<PostDataModel>?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addPost(post: PostDataModel)
 
-    @Query("DELETE FROM User")
+    @Query("DELETE FROM Feed")
     fun clear()
 }

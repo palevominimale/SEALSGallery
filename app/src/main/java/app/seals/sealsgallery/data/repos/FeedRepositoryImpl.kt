@@ -11,8 +11,8 @@ class UserRepositoryImpl (context: Context): FeedRepository {
 
     private val db: FeedRepositoryDAO = FeedRoomDB.getInstance(context)?.dao()!!
 
-    override fun getAll(): List<PostDataModel>? {
-        return db.getAll()
+    override fun getAll(): List<PostDataModel> {
+        return db.getAll() ?: listOf(PostDataModel())
     }
 
     override fun getAllDomain(): List<PostDomainModel> {
