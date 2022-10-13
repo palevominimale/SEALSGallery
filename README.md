@@ -5,7 +5,6 @@ Used technologies and patterns:
 - MVVM
 - Clean architecture
 - Coroutines
-- Coroutine Flow
 - LiveData
 - Firebase Realtime Database
 - Google authentication
