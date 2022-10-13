@@ -3,7 +3,6 @@ package app.seals.sealsgallery.ui.main
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import app.seals.sealsgallery.R
-import app.seals.sealsgallery.domain.interfaces.FeedRepository
 import app.seals.sealsgallery.domain.models.UserDomainModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
