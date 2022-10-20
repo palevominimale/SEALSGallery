@@ -1,10 +1,8 @@
 package app.seals.sealsgallery.domain.interfaces
 
 import app.seals.sealsgallery.data.models.PostDataModel
-import app.seals.sealsgallery.data.models.UserDataModel
 import app.seals.sealsgallery.data.room.feed.FeedRepositoryDAO
 import app.seals.sealsgallery.domain.models.PostDomainModel
-import app.seals.sealsgallery.domain.models.UserDomainModel
 
 interface FeedRepository : FeedRepositoryDAO {
 

@@ -6,7 +6,6 @@ import app.seals.sealsgallery.data.models.TrackDataModel
 import app.seals.sealsgallery.data.models.TrackPointDataModel
 import app.seals.sealsgallery.data.models.UserDataModel
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
-import com.google.firebase.firestore.auth.User
 import com.google.gson.Gson
 import java.lang.reflect.Type
 

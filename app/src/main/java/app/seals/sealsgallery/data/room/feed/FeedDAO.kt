@@ -1,8 +1,10 @@
 package app.seals.sealsgallery.data.room.feed
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import app.seals.sealsgallery.data.models.PostDataModel
-import app.seals.sealsgallery.data.models.UserDataModel
 
 @Dao
 interface FeedRepositoryDAO {

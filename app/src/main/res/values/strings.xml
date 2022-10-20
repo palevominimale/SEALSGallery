@@ -53,4 +53,5 @@
     <string name="personal_user_language_key">lang</string>
     <string name="personal_user_language">Language</string>
     <string name="user_last_online">Last seen today at 12:22</string>
+    <string name="personal_user_bio">Your bio</string>
 </resources>
