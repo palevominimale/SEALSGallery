@@ -40,12 +40,6 @@ class FeedFragment : Fragment() {
         vm.feed.observe(viewLifecycleOwner) {
             feedRecycler.adapter?.notifyDataSetChanged()
         }
-
-        feedSwipe.setOnRefreshListener {
-            vm.loadFeedFromFirebase()
-            feedSwipe.isRefreshing = false
-        }
-
         vm.loadFeed()
 
         feedAdapter.selectedItem.observe(viewLifecycleOwner) {
@@ -53,5 +47,11 @@ class FeedFragment : Fragment() {
                 showItem.showPost(parentFragmentManager, vm.feed.value?.get(it))
             }
         }
+
+        feedSwipe.setOnRefreshListener {
+            vm.loadFeedFromFirebase()
+            feedSwipe.isRefreshing = false
+        }
+
     }
 }
