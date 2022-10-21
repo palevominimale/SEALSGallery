@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.domain.models.PostDomainModel
 import app.seals.sealsgallery.ui.helpers.ShowPostModel
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import org.koin.java.KoinJavaComponent.inject
 
 @SuppressLint("SetTextI18n")
