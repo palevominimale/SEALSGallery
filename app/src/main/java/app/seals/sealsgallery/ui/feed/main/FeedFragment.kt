@@ -12,13 +12,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.ui.feed.main.adapters.FeedRecyclerAdapter
 import app.seals.sealsgallery.ui.feed.show_single.ShowFeedItemFragment
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.java.KoinJavaComponent.inject
 
 class FeedFragment : Fragment() {
 
     private val vm : FeedViewModel by sharedViewModel()
-    private val showItem: ShowFeedItemFragment by inject(ShowFeedItemFragment::class.java)
+    private val showItem: ShowFeedItemFragment by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +33,7 @@ class FeedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val feedSwipe = view.rootView.findViewById<SwipeRefreshLayout>(R.id.feedSwipeRefresh)
         val feedRecycler = view.rootView.findViewById<RecyclerView>(R.id.feedRecycler)
-        val feedAdapter = FeedRecyclerAdapter(vm.feed, requireContext(), savedInstanceState, vm, requireActivity())
+        val feedAdapter = FeedRecyclerAdapter(vm.feed)
         feedRecycler.adapter = feedAdapter
         feedRecycler.layoutManager = LinearLayoutManager(requireContext())
 

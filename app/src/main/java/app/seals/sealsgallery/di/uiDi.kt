@@ -1,5 +1,6 @@
 package app.seals.sealsgallery.di
 
+import android.app.Activity
 import app.seals.sealsgallery.ui.feed.main.FeedViewModel
 import app.seals.sealsgallery.ui.feed.show_single.ShowFeedItemFragment
 import app.seals.sealsgallery.ui.feed.show_single.ShowFeedItemFragmentViewModel
@@ -9,6 +10,7 @@ import app.seals.sealsgallery.ui.mytracks.MyTracksViewModel
 import app.seals.sealsgallery.ui.record.RecordViewModel
 import app.seals.sealsgallery.ui.settings.SettingsViewModel
 import app.seals.sealsgallery.ui.settings_extended.SettingsFragmentExtendedViewModel
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -25,10 +27,10 @@ val uiDi = module {
 
     viewModel {
         ShowFeedItemFragmentViewModel(
-            context = androidContext(),
             drawTrack = get(),
             updateBounds = get(),
-            setStartEndMarkers = get()
+            setStartEndMarkers = get(),
+            showPostModel = get()
         )
     }
 
@@ -65,7 +67,7 @@ val uiDi = module {
         SettingsViewModel()
     }
 
-    single {
+    single <Activity> {
         MainActivity()
     }
 

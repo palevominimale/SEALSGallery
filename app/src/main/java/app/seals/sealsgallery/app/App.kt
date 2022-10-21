@@ -21,7 +21,8 @@ class App: Application() {
                 domainDi,
                 firebaseDi,
                 locationDi,
-                dataDi
+                dataDi,
+                helpersDi
             ))
         }
     }
