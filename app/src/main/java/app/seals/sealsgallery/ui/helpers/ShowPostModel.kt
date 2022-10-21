@@ -33,7 +33,7 @@ class ShowPostModel(
 ) {
 
     @SuppressLint("SetTextI18n")
-    fun load(view: View, material: PostDomainModel) {
+    fun invoke(view: View, material: PostDomainModel) {
         val userName: TextView = view.findViewById(R.id.userItemName)
         val lastOnline: TextView = view.findViewById(R.id.userItemLastOnline)
         val trackTime: TextView = view.findViewById(R.id.userTrackTime)

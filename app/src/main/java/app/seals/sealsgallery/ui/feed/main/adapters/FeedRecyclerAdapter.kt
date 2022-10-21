@@ -29,7 +29,7 @@ class FeedRecyclerAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val material = feed.value?.get(position) ?: PostDomainModel()
-        showPostModel.load(holder.itemView, material)
+        showPostModel.invoke(holder.itemView, material)
         holder.itemView.setOnClickListener {
             selectedItem.postValue(position)
         }

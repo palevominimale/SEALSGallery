@@ -23,5 +23,5 @@ class ShowFeedItemFragmentViewModel(
 
     fun updateCameraBounds(track: TrackDomainModel) = updateBounds.invoke(track)
 
-    fun show(view: View, item: PostDomainModel) = showPostModel.load(view, item)
+    fun show(view: View, item: PostDomainModel) = showPostModel.invoke(view, item)
 }
