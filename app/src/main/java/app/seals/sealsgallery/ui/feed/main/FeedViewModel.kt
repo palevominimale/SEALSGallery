@@ -5,13 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.domain.interfaces.FeedRepository
-import app.seals.sealsgallery.domain.map_tools.DrawTrack
-import app.seals.sealsgallery.domain.map_tools.UpdateBounds
 import app.seals.sealsgallery.domain.models.PostDomainModel
 import app.seals.sealsgallery.domain.models.TrackDomainModel
 import app.seals.sealsgallery.domain.models.UserDomainModel
-import com.google.android.gms.maps.CameraUpdate
-import com.google.android.gms.maps.model.PolylineOptions
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

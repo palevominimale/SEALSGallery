@@ -1,7 +1,5 @@
 package app.seals.sealsgallery.ui.feed.show_single
 
-import android.app.Activity
-import android.content.Context
 import android.view.View
 import androidx.lifecycle.ViewModel
 import app.seals.sealsgallery.domain.map_tools.DrawTrack

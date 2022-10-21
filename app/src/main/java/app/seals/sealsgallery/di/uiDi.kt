@@ -10,7 +10,6 @@ import app.seals.sealsgallery.ui.mytracks.MyTracksViewModel
 import app.seals.sealsgallery.ui.record.RecordViewModel
 import app.seals.sealsgallery.ui.settings.SettingsViewModel
 import app.seals.sealsgallery.ui.settings_extended.SettingsFragmentExtendedViewModel
-import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
