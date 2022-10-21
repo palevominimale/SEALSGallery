@@ -1,4 +1,4 @@
-package app.seals.sealsgallery.ui.feed.adapters
+package app.seals.sealsgallery.ui.feed.main.adapters
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -17,7 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.domain.map_tools.SetStartEndMarkers
 import app.seals.sealsgallery.domain.models.PostDomainModel
-import app.seals.sealsgallery.ui.feed.FeedViewModel
+import app.seals.sealsgallery.ui.feed.main.FeedViewModel
+import app.seals.sealsgallery.ui.feed.show_single.ShowFeedItemFragment
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
 import com.squareup.picasso.Picasso
@@ -39,6 +40,7 @@ class FeedRecyclerAdapter(
 ) : RecyclerView.Adapter<FeedRecyclerAdapter.ViewHolder>() {
 
     private val setStartEndMarkers : SetStartEndMarkers by inject(SetStartEndMarkers::class.java)
+    val selectedItem = MutableLiveData<Int>(-1)
 
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         val userName: TextView = item.findViewById(R.id.userItemName)
@@ -110,6 +112,9 @@ class FeedRecyclerAdapter(
                     addMarker(markers.first)
                     addMarker(markers.second)
                 }
+            }
+            holder.itemView.setOnClickListener {
+                selectedItem.postValue(position)
             }
         }
     }

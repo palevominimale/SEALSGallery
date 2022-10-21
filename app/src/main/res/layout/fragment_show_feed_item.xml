@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/recycler_bg_selector"
+    android:padding="8dp"
+    android:layout_margin="5dp">
+
+    <ImageView
+        android:id="@+id/userItemAvatarShowFragment"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_person_24"
+        android:contentDescription="@string/personal_user_name" />
+
+    <TextView
+        android:id="@+id/userItemNameShowFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/personal_user_name"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/userItemAvatarShowFragment"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/userItemLastOnlineShowFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/user_last_online"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/userItemAvatarShowFragment"
+        app:layout_constraintEnd_toStartOf="@+id/userItemAvatarShowFragment"
+        app:layout_constraintTop_toBottomOf="@+id/userItemNameShowFragment" />
+
+    <TextView
+        android:id="@+id/feedItemCityShowFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tracks_city"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/userItemNameShowFragment" />
+
+    <TextView
+        android:id="@+id/userTrackTimeShowFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/track_item_time"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/userItemAvatarShowFragment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feedItemCityShowFragment" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintTop_toBottomOf="@id/userItemAvatarShowFragment">
+
+        <com.google.android.gms.maps.MapView
+            android:clickable="false"
+            android:focusable="false"
+            android:id="@+id/userItemMapViewShowFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

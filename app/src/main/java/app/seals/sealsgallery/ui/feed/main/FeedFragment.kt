@@ -1,4 +1,4 @@
-package app.seals.sealsgallery.ui.feed
+package app.seals.sealsgallery.ui.feed.main
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,12 +10,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import app.seals.sealsgallery.R
-import app.seals.sealsgallery.ui.feed.adapters.FeedRecyclerAdapter
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import app.seals.sealsgallery.ui.feed.main.adapters.FeedRecyclerAdapter
+import app.seals.sealsgallery.ui.feed.show_single.ShowFeedItemFragment
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.java.KoinJavaComponent.inject
 
 class FeedFragment : Fragment() {
 
-    private val vm : FeedViewModel by viewModel()
+    private val vm : FeedViewModel by sharedViewModel()
+    private val showItem: ShowFeedItemFragment by inject(ShowFeedItemFragment::class.java)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +45,13 @@ class FeedFragment : Fragment() {
             vm.loadFeedFromFirebase()
             feedSwipe.isRefreshing = false
         }
+
         vm.loadFeed()
+
+        feedAdapter.selectedItem.observe(viewLifecycleOwner) {
+            if(it>=0) {
+                showItem.showPost(parentFragmentManager, vm.feed.value?.get(it))
+            }
+        }
     }
 }

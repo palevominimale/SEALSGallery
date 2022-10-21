@@ -1,6 +1,8 @@
 package app.seals.sealsgallery.di
 
-import app.seals.sealsgallery.ui.feed.FeedViewModel
+import app.seals.sealsgallery.ui.feed.main.FeedViewModel
+import app.seals.sealsgallery.ui.feed.show_single.ShowFeedItemFragment
+import app.seals.sealsgallery.ui.feed.show_single.ShowFeedItemFragmentViewModel
 import app.seals.sealsgallery.ui.main.MainActivity
 import app.seals.sealsgallery.ui.main.MainActivityViewModel
 import app.seals.sealsgallery.ui.mytracks.MyTracksViewModel
@@ -18,6 +20,15 @@ val uiDi = module {
             updateBounds = get(),
             context = androidContext(),
             feedRepository = get()
+        )
+    }
+
+    viewModel {
+        ShowFeedItemFragmentViewModel(
+            context = androidContext(),
+            drawTrack = get(),
+            updateBounds = get(),
+            setStartEndMarkers = get()
         )
     }
 
@@ -56,5 +67,9 @@ val uiDi = module {
 
     single {
         MainActivity()
+    }
+
+    single {
+        ShowFeedItemFragment()
     }
 }

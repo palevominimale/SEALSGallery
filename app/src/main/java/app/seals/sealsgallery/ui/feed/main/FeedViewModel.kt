@@ -1,4 +1,4 @@
-package app.seals.sealsgallery.ui.feed
+package app.seals.sealsgallery.ui.feed.main
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
