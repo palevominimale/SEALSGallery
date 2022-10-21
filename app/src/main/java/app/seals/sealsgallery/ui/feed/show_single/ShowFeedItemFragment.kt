@@ -48,72 +48,72 @@ class ShowFeedItemFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        load(view, savedInstanceState)
+        if (material != null) {
+            load(view, material!!)
+        }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun load(view: View, savedInstanceState: Bundle?) {
-        val userName: TextView = view.findViewById(R.id.userItemNameShowFragment)
-        val lastOnline: TextView = view.findViewById(R.id.userItemLastOnlineShowFragment)
-        val trackTime: TextView = view.findViewById(R.id.userTrackTimeShowFragment)
-        val userAvatar: ImageView = view.findViewById(R.id.userItemAvatarShowFragment)
-        val trackCity: TextView = view.findViewById(R.id.feedItemCityShowFragment)
-        val itemMap: MapView = view.findViewById(R.id.userItemMapViewShowFragment)
+    private fun load(view: View, material: PostDomainModel) {
+        val userName: TextView = view.findViewById(R.id.userItemName)
+        val lastOnline: TextView = view.findViewById(R.id.userItemLastOnline)
+        val trackTime: TextView = view.findViewById(R.id.userTrackTime)
+        val userAvatar: ImageView = view.findViewById(R.id.userItemAvatar)
+        val trackCity: TextView = view.findViewById(R.id.feedItemCity)
+        val itemMap: MapView = view.findViewById(R.id.userItemMapView)
 
-        if (material != null) {
-            material?.run {
-                val t1 = Instant.ofEpochSecond(track.startTime/1000)
-                    .atZone(ZoneId.systemDefault())
-                val t2 = Instant.ofEpochSecond(track.endTime/1000)
-                    .atZone(ZoneId.systemDefault())
-                val formatter = DateTimeFormatter.ofPattern("dd/MM HH:mm")
-                val formatterLastOnline = DateTimeFormatter.ofPattern("dd/MM HH:mm")
-                val lastOnlineTime = Instant.ofEpochSecond(material!!.user.lastLogin)
-                    .atZone(ZoneId.systemDefault())
-                var userPhoto : RoundedBitmapDrawable? = null
-                CoroutineScope(Dispatchers.IO).launch {
-                    val bitmap = kotlin.runCatching {
-                        Picasso.get().load(material!!.user.photoLink).get()
-                    }
-                    val bitmapGet = bitmap.getOrNull()
-                    userPhoto = if(bitmapGet != null) {
-                        RoundedBitmapDrawableFactory.create(requireContext().resources, bitmapGet)
-                            .apply {
-                                isCircular = true
-                            }
-                    } else null
-                }.invokeOnCompletion {
-                    requireActivity().runOnUiThread {
-                        if (userPhoto != null) {
-                            userAvatar.setImageDrawable(userPhoto)
-                        } else {
-                            userAvatar.setImageResource(R.drawable.ic_baseline_person_24)
+        material.run {
+            val t1 = Instant.ofEpochSecond(track.startTime/1000)
+                .atZone(ZoneId.systemDefault())
+            val t2 = Instant.ofEpochSecond(track.endTime/1000)
+                .atZone(ZoneId.systemDefault())
+            val formatter = DateTimeFormatter.ofPattern("dd/MM HH:mm")
+            val formatterLastOnline = DateTimeFormatter.ofPattern("dd/MM HH:mm")
+            val lastOnlineTime = Instant.ofEpochSecond(material.user.lastLogin)
+                .atZone(ZoneId.systemDefault())
+            var userPhoto : RoundedBitmapDrawable? = null
+            CoroutineScope(Dispatchers.IO).launch {
+                val bitmap = kotlin.runCatching {
+                    Picasso.get().load(material.user.photoLink).get()
+                }
+                val bitmapGet = bitmap.getOrNull()
+                userPhoto = if(bitmapGet != null) {
+                    RoundedBitmapDrawableFactory.create(requireContext().resources, bitmapGet)
+                        .apply {
+                            isCircular = true
                         }
+                } else null
+            }.invokeOnCompletion {
+                requireActivity().runOnUiThread {
+                    if (userPhoto != null) {
+                        userAvatar.setImageDrawable(userPhoto)
+                    } else {
+                        userAvatar.setImageResource(R.drawable.ic_baseline_person_24)
                     }
                 }
-                userName.text = material!!.user.name
-                lastOnline.text = "Last seen ${lastOnlineTime.format(formatterLastOnline)}"
-                trackTime.text = "${t1.format(formatter)} - ${t2.format(formatter)}"
-                if(track.trackPoints.size > 0) {
-                    trackCity.text = Geocoder(context).getFromLocation(
-                        track.trackPoints[0].latitude,
-                        track.trackPoints[0].longitude,
-                        1)[0]
-                        .locality
-                }
-                itemMap.onCreate(savedInstanceState)
-                itemMap.onResume()
-                MapsInitializer.initialize(requireContext())
-                itemMap.getMapAsync { googleMap ->
-                    googleMap.apply {
-                        val options = vm.drawTrack(track)
-                        val markers = vm.setMarkers(options)
-                        clear()
-                        addPolyline(options)
-                        moveCamera(vm.updateCameraBounds(track))
-                        addMarker(markers.first)
-                        addMarker(markers.second)
-                    }
+            }
+            userName.text = material.user.name
+            lastOnline.text = "Last seen ${lastOnlineTime.format(formatterLastOnline)}"
+            trackTime.text = "${t1.format(formatter)} - ${t2.format(formatter)}"
+            if(track.trackPoints.size > 0) {
+                trackCity.text = Geocoder(context).getFromLocation(
+                    track.trackPoints[0].latitude,
+                    track.trackPoints[0].longitude,
+                    1)[0]
+                    .locality
+            }
+            itemMap.onCreate(null)
+            itemMap.onResume()
+            MapsInitializer.initialize(requireContext())
+            itemMap.getMapAsync { googleMap ->
+                googleMap.apply {
+                    val options = vm.drawTrack(track)
+                    val markers = vm.setMarkers(options)
+                    clear()
+                    addPolyline(options)
+                    moveCamera(vm.updateCameraBounds(track))
+                    addMarker(markers.first)
+                    addMarker(markers.second)
                 }
             }
         }
