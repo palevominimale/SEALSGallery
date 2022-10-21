@@ -18,8 +18,6 @@ import org.koin.dsl.module
 val uiDi = module {
     viewModel {
         FeedViewModel(
-            drawTrack = get(),
-            updateBounds = get(),
             context = androidContext(),
             feedRepository = get()
         )

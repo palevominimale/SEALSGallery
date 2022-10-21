@@ -19,8 +19,6 @@ import kotlinx.coroutines.launch
 
 class FeedViewModel(
     context: Context,
-    private val drawTrack: DrawTrack,
-    private val updateBounds: UpdateBounds,
     private val feedRepository: FeedRepository
 ) : ViewModel() {
 
@@ -31,14 +29,6 @@ class FeedViewModel(
     private val refUserDataNode = context.getString(R.string.firebase_reference_user_data)
     private val db = FirebaseDatabase.getInstance()
     private val ref = db.getReference(refMainNode)
-
-    fun drawTrack(track: TrackDomainModel) : PolylineOptions {
-        return drawTrack.invoke(track)
-    }
-
-    fun updateCameraBounds(track: TrackDomainModel) : CameraUpdate {
-        return updateBounds.invoke(track)
-    }
 
     fun loadFeed() {
         feedList.clear()
