@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_my_tracks_feed"
-        android:name="app.seals.sealsgallery.ui.mytracks_feed_based.MyTracksFeedFragment"
+        android:name="app.seals.sealsgallery.ui.user_feed.UserFeedFragment"
         android:label="@string/menu_my_tracks_feed"
         tools:layout="@layout/fragment_my_tracks_feed" />
 

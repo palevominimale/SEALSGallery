@@ -1,19 +1,21 @@
-package app.seals.sealsgallery.ui.mytracks_feed_based
+package app.seals.sealsgallery.ui.user_feed
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import app.seals.sealsgallery.R
-import app.seals.sealsgallery.ui.feed.main.FeedFragment
-import com.google.firebase.auth.GoogleAuthProvider
+import app.seals.sealsgallery.ui.adapters.FeedRecyclerAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MyTracksFeedFragment : Fragment() {
+class UserFeedFragment : Fragment() {
 
-    private val vm: MyTracksFeedViewModel by viewModel()
+    private val vm: UserFeedViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,14 +26,16 @@ class MyTracksFeedFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_my_tracks_feed, container, false)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val recycler = view.findViewById<RecyclerView>(R.id.userpageRecyclerView)
+        val adapter = FeedRecyclerAdapter(vm.userFeed)
+        recycler.adapter = adapter
+        recycler.layoutManager = LinearLayoutManager(requireContext())
         vm.loadFeed()
-        vm.userFeed.observe(viewLifecycleOwner) { list ->
-            list.forEach { post ->
-                Log.e("MTFF", "$post")
-            }
+        vm.userFeed.observe(viewLifecycleOwner) {
+            adapter.notifyDataSetChanged()
         }
     }
 }

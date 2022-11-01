@@ -1,4 +1,4 @@
-package app.seals.sealsgallery.ui.mytracks_feed_based
+package app.seals.sealsgallery.ui.user_feed
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
@@ -7,7 +7,7 @@ import app.seals.sealsgallery.domain.interfaces.FeedRepository
 import app.seals.sealsgallery.domain.models.PostDomainModel
 import com.google.firebase.auth.FirebaseAuth
 
-class MyTracksFeedViewModel(
+class UserFeedViewModel(
     context: Context,
     private val feedRepository: FeedRepository
 ) : ViewModel() {

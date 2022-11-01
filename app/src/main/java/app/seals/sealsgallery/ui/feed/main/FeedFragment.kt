@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import app.seals.sealsgallery.R
-import app.seals.sealsgallery.ui.feed.main.adapters.FeedRecyclerAdapter
+import app.seals.sealsgallery.ui.adapters.FeedRecyclerAdapter
 import app.seals.sealsgallery.ui.feed.show_single.ShowFeedItemFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel

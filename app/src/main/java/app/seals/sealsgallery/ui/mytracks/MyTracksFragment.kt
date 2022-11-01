@@ -14,7 +14,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.domain.map_tools.SetStartEndMarkers
 import app.seals.sealsgallery.ui.mytracks.adapters.TrackListRecyclerAdapter
-import app.seals.sealsgallery.ui.mytracks_feed_based.MyTracksFeedFragment
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
 import kotlinx.coroutines.CoroutineScope
