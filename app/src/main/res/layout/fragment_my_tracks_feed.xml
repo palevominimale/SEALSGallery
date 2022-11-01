@@ -18,12 +18,13 @@
                 android:padding="8dp">
                 <ImageView
                     android:id="@+id/userpageAvatar"
-                    android:layout_width="111dp"
+                    android:layout_width="119dp"
                     android:layout_height="111dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/no_accounts_48px"
-                    android:contentDescription="@string/personal_user_avatar"/>
+                    android:contentDescription="@string/personal_user_avatar"
+                    android:paddingRight="8dp"/>
                 <TextView
                     android:id="@+id/userpageUsername"
                     android:layout_width="wrap_content"
