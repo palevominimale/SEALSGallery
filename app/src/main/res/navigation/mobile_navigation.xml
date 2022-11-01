@@ -7,14 +7,8 @@
 
     <fragment
         android:id="@+id/nav_my_tracks"
-        android:name="app.seals.sealsgallery.ui.mytracks.MyTracksFragment"
-        android:label="@string/menu_my_tracks"
-        tools:layout="@layout/fragment_my_tracks" />
-
-    <fragment
-        android:id="@+id/nav_my_tracks_feed"
         android:name="app.seals.sealsgallery.ui.user_feed.UserFeedFragment"
-        android:label="@string/menu_my_tracks_feed"
+        android:label="@string/menu_my_tracks"
         tools:layout="@layout/fragment_my_tracks_feed" />
 
     <fragment

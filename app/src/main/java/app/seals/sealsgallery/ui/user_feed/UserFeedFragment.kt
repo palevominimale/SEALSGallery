@@ -15,15 +15,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.seals.sealsgallery.R
 import app.seals.sealsgallery.ui.adapters.FeedRecyclerAdapter
+import app.seals.sealsgallery.ui.feed.show_single.ShowFeedItemFragment
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserFeedFragment : Fragment() {
 
     private val vm: UserFeedViewModel by viewModel()
+    private val showItem: ShowFeedItemFragment by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +56,7 @@ class UserFeedFragment : Fragment() {
         vm.userFeed.observe(viewLifecycleOwner) {
             adapter.notifyDataSetChanged()
         }
+
         vm.userData.observe(viewLifecycleOwner) {
             Log.e("MTFF", "$it")
             var userPhoto : RoundedBitmapDrawable? = null
@@ -80,6 +84,12 @@ class UserFeedFragment : Fragment() {
             userSubscriptions.text = it.listOfSubscriptions.size.toString()
             userSubscribers.text = it.listOfSubscribers.size.toString()
             userTracksNumber.text = vm.userFeed.value?.size.toString()
+        }
+
+        adapter.selectedItem.observe(viewLifecycleOwner) {
+            if(it>=0) {
+                showItem.showPost(parentFragmentManager, vm.userFeed.value?.get(it))
+            }
         }
     }
 }
