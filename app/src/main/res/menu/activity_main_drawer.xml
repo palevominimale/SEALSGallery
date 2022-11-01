@@ -7,6 +7,11 @@
         android:id="@+id/nav_group_logged_in"
         android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_my_tracks_feed"
+            android:icon="@drawable/directions_run_40px"
+            android:title="@string/menu_my_tracks_feed"
+            android:visible="false"/>
+        <item
             android:id="@+id/nav_my_tracks"
             android:icon="@drawable/directions_run_40px"
             android:title="@string/menu_my_tracks"

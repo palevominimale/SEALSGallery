@@ -13,7 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FeedViewModel(
+open class FeedViewModel(
     context: Context,
     private val feedRepository: FeedRepository
 ) : ViewModel() {
@@ -26,7 +26,7 @@ class FeedViewModel(
     private val db = FirebaseDatabase.getInstance()
     private val ref = db.getReference(refMainNode)
 
-    fun loadFeed() {
+    open fun loadFeed() {
         feedList.clear()
         feedList.addAll(feedRepository.getAllDomain() ?: listOf())
         feedList.sortByDescending {
@@ -35,7 +35,7 @@ class FeedViewModel(
         feed.postValue(feedList)
     }
 
-    fun loadFeedFromFirebase() {
+    open fun loadFeedFromFirebase() {
         ref.get().addOnCompleteListener { snapshot ->
             feedList.clear()
             snapshot.result.children.forEach { children ->

@@ -54,4 +54,9 @@
     <string name="personal_user_language">Language</string>
     <string name="user_last_online">Last seen today at 12:22</string>
     <string name="personal_user_bio">Your bio</string>
+    <string name="menu_my_tracks_feed">My tracks (feed)</string>
+    <string name="userpage_subscribers">Subscribers: 0</string>
+    <string name="userpage_subscriptions">Subscriptions: 0</string>
+    <string name="userpage_total_tracks">Tracks: 0</string>
+    <string name="personal_user_avatar">User avatar</string>
 </resources>

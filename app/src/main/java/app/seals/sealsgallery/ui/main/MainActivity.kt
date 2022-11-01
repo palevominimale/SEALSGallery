@@ -74,7 +74,7 @@ class MainActivity: AppCompatActivity() {
                         if (signInTask.isSuccessful) {
                             signedIn()
                             vm.setUser(UserDomainModel(
-                                uid = account.id ?: "null",
+                                uid = auth.uid ?: "null",
                                 name = account.displayName ?: "null",
                                 photoLink = account.photoUrl.toString(),
                                 lastLogin = lastActivation

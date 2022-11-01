@@ -7,6 +7,7 @@ import app.seals.sealsgallery.ui.feed.show_single.ShowFeedItemFragmentViewModel
 import app.seals.sealsgallery.ui.main.MainActivity
 import app.seals.sealsgallery.ui.main.MainActivityViewModel
 import app.seals.sealsgallery.ui.mytracks.MyTracksViewModel
+import app.seals.sealsgallery.ui.mytracks_feed_based.MyTracksFeedViewModel
 import app.seals.sealsgallery.ui.record.RecordViewModel
 import app.seals.sealsgallery.ui.settings.SettingsViewModel
 import app.seals.sealsgallery.ui.settings_extended.SettingsFragmentExtendedViewModel
@@ -53,6 +54,13 @@ val uiDi = module {
             roomDB = get(),
             imagesPicker = get(),
             imagesOperations = get()
+        )
+    }
+
+    viewModel {
+        MyTracksFeedViewModel(
+            context = androidContext(),
+            feedRepository = get()
         )
     }
 

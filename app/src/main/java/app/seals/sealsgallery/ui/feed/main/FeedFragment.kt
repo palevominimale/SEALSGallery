@@ -15,9 +15,9 @@ import app.seals.sealsgallery.ui.feed.show_single.ShowFeedItemFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FeedFragment : Fragment() {
+open class FeedFragment : Fragment() {
 
-    private val vm : FeedViewModel by viewModel()
+    open val vm : FeedViewModel by viewModel()
     private val showItem: ShowFeedItemFragment by inject()
 
     override fun onCreateView(
