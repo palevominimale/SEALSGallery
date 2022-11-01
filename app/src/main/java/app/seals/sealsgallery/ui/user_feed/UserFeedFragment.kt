@@ -2,7 +2,6 @@ package app.seals.sealsgallery.ui.user_feed
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +32,6 @@ class UserFeedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.e("MTFF", "start for ${vm.auth.uid}")
         return inflater.inflate(R.layout.fragment_my_tracks_feed, container, false)
     }
 
@@ -58,7 +56,6 @@ class UserFeedFragment : Fragment() {
         }
 
         vm.userData.observe(viewLifecycleOwner) {
-            Log.e("MTFF", "$it")
             var userPhoto : RoundedBitmapDrawable? = null
             CoroutineScope(Dispatchers.IO).launch {
                 val bitmap = kotlin.runCatching {
